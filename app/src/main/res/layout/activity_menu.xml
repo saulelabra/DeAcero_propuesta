@@ -99,7 +99,8 @@
                 android:id="@+id/button"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:text="+"
+                android:onClick="regChofer"/>
         </LinearLayout>
 
         <LinearLayout
@@ -124,7 +125,8 @@
                 android:id="@+id/button"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:text="+"
+                android:onClick="regCamion"/>
         </LinearLayout>
 
         <LinearLayout
