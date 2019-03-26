@@ -22,6 +22,16 @@ public class Menu extends AppCompatActivity {
         startActivity(toRegContenedor);
     }
 
+    public void regTransportista(View view) {
+        Intent toRegTransportista = new Intent (Menu.this, AgregarTransportista.class);
+        startActivity(toRegTransportista);
+    }
+
+    public void regEnvio (View view) {
+        Intent toRegEnvio = new Intent (Menu.this, AgregarEnvio.class);
+        startActivity(toRegEnvio);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

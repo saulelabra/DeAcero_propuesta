@@ -12,7 +12,8 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre" />
+        android:text="Nombre"
+        style="@style/field_description"/>
 
     <EditText
         android:id="@+id/editText"
@@ -26,7 +27,8 @@
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Apellido" />
+        android:text="Apellido"
+        style="@style/field_description" />
 
     <EditText
         android:id="@+id/editText2"
@@ -40,7 +42,8 @@
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Transportista" />
+        android:text="Transportista"
+        style="@style/field_description" />
 
     <Spinner
         android:id="@+id/spinner"

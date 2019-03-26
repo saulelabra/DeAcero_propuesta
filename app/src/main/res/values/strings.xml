@@ -4,4 +4,15 @@
     <string name="pswd_et">Contraseña</string>
     <string name="login_btn">Iniciar Sesión</string>
     <string name="logo">Logo_DeAcero</string>
+    <string name="chofer_tv">Chofer:</string>
+    <string name="camion_tv">Camión</string>
+    <string name="contenedor_tv">Contenedor</string>
+    <string name="material_tv">Material:</string>
+    <string name="cantidad_tv">Cantidad:</string>
+    <string name="fechaYhora_tv">Fecha y Hora:</string>
+    <string name="material_hint">Ingrese Material</string>
+    <string name="cantidad_hint">Ingrese Cantidad</string>
+    <string name="save_btn">Guardar</string>
+    <string name="boleta_description">Boleta de Salida</string>
+    <string name="field_boleta">Boleta de Salida</string>
 </resources>
