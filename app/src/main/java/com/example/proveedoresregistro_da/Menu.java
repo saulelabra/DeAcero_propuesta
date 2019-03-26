@@ -17,6 +17,11 @@ public class Menu extends AppCompatActivity {
         startActivity(toRegCamion);
     }
 
+    public void regContenedor(View view) {
+        Intent toRegContenedor = new Intent(Menu.this, AgregarContenedor.class);
+        startActivity(toRegContenedor);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
