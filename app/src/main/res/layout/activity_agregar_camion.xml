@@ -65,6 +65,21 @@
         android:inputType="textPersonName"
         android:hint="Introduzca placas" />
 
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/RFID"
+        style="@style/field_description"/>
+
+    <EditText
+        android:id="@+id/editText11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/insert_RFID"
+        android:inputType="textPersonName" />
+
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"

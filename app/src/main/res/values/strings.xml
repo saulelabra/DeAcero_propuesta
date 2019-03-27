@@ -15,4 +15,15 @@
     <string name="save_btn">Guardar</string>
     <string name="boleta_description">Boleta de Salida</string>
     <string name="field_boleta">Boleta de Salida</string>
+    <string name="trans_nom_tv">Nombre</string>
+    <string name="phone">Teléfono</string>
+    <string name="insert_nom">Introduzca nombre</string>
+    <string name="insert_phone">Introduzca teléfono</string>
+    <string name="mail">Correo</string>
+    <string name="insert_mail">Introduzca correo</string>
+    <string name="RFID">RFID</string>
+    <string name="insert_RFID">Introduzca ID</string>
+    <string name="dir_origen">Dirección de origen</string>
+    <string name="insert_addr">Introduzca dirección</string>
+    <string name="dest">Patio de destino</string>
 </resources>

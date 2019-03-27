@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarTransportista">
+    tools:context=".AgregarTransportista"
+    android:orientation="vertical"
+    android:padding="@dimen/interface_padding">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView20"
+        style="@style/field_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trans_nom_tv" />
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/insert_nom"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView21"
+        style="@style/field_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/phone" />
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/insert_phone"
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/textView22"
+        style="@style/field_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mail" />
+
+    <EditText
+        android:id="@+id/editText10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/insert_mail"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/save_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_btn"
+        android:onClick="goToMenu"/>
+
+</LinearLayout>
