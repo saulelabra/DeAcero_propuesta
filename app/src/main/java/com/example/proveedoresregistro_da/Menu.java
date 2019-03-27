@@ -32,6 +32,11 @@ public class Menu extends AppCompatActivity {
         startActivity(toRegEnvio);
     }
 
+    public void logout (View view) {
+        Intent toLogScreen = new Intent (Menu.this, MainActivity.class);
+        startActivity(toLogScreen);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
