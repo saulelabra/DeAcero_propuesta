@@ -48,8 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Datos Registrados"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimaryDark"/>
+        style="@style/subtitle"/>
 
     <Space
         android:layout_width="match_parent"

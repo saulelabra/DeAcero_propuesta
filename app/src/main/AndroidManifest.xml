@@ -9,20 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AgregarEnvio"
-            android:label="Agregar Envío"></activity>
-        <activity android:name=".AgregarTransportista"
-            android:label="Agregar Transportista"/>
-        <activity android:name=".AgregarContenedor"
-            android:label="Agregar Contenedor"/>
-        <activity android:name=".MainActivity"
-            android:label="Inicio de Sesión"/>
-        <activity android:name=".AgregarCamion"
-            android:label="Agregar Camión"/>
-        <activity android:name=".AgregarChofer"
-            android:label="Agregar Chofer"/>
-        <activity android:name=".Menu"
-            android:label="Menú principal"/>
+        <activity android:name=".DetallesDeEnvio"></activity>
+        <activity android:name=".EnviosProgramados" />
+        <activity
+            android:name=".AgregarEnvio"
+            android:label="Agregar Envío" />
+        <activity
+            android:name=".AgregarTransportista"
+            android:label="Agregar Transportista" />
+        <activity
+            android:name=".AgregarContenedor"
+            android:label="Agregar Contenedor" />
+        <activity
+            android:name=".MainActivity"
+            android:label="Inicio de Sesión" />
+        <activity
+            android:name=".AgregarCamion"
+            android:label="Agregar Camión" />
+        <activity
+            android:name=".AgregarChofer"
+            android:label="Agregar Chofer" />
+        <activity
+            android:name=".Menu"
+            android:label="Menú principal" />
         <activity
             android:name=".Splash"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
