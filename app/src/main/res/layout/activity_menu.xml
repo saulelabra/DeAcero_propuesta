@@ -8,13 +8,30 @@
     android:padding="@dimen/interface_padding"
     tools:context=".Menu">
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/logout"
-        android:text="@string/logout"
-        android:onClick="logout"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/logout"
+            android:text="@string/logout"
+            android:onClick="logout"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentStart="true"/>
+
+        <Button
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:text="Ayuda"
+            android:onClick="help"/>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView3"
@@ -54,147 +71,158 @@
         android:layout_width="match_parent"
         android:layout_height="30dp" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView3"
-                style="@style/field_description"
-                android:layout_width="180dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Transportista" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5" />
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/field_description"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="Transportista" />
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="100dp"
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5" />
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="regTransportista"
+                    android:text="+"
+                    style="@style/Base.Widget.AppCompat.Button"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="regTransportista"
-                android:text="+" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="Choferes"
+                    style="@style/field_description"/>
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="regChofer"
+                    android:text="+"
+                    style="@style/Base.Widget.AppCompat.Button"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="Camiones"
+                    style="@style/field_description"/>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="12" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="regCamion"
+                    android:text="+"
+                    style="@style/Base.Widget.AppCompat.Button"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="Contenedores"
+                    style="@style/field_description"/>
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="regContenedor"
+                    android:text="+"
+                    style="@style/Base.Widget.AppCompat.Button"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:text="Envíos"
+                    style="@style/field_description"/>
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="regEnvio"
+                    android:text="+"
+                    style="@style/Widget.AppCompat.Button"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="Choferes"
-                style="@style/field_description"/>
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:onClick="regChofer"
-                android:text="+" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="Camiones"
-                style="@style/field_description"/>
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="12" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:onClick="regCamion"
-                android:text="+" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="Contenedores"
-                style="@style/field_description"/>
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="10" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:onClick="regContenedor"
-                android:text="+" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="Envíos"
-                style="@style/field_description"/>
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="10" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:onClick="regEnvio"
-                android:text="+" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

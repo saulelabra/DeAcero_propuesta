@@ -37,6 +37,11 @@ public class Menu extends AppCompatActivity {
         startActivity(toLogScreen);
     }
 
+    public void help(View view) {
+        Intent toHelp = new Intent(Menu.this, Contact_info.class);
+        startActivity(toHelp);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

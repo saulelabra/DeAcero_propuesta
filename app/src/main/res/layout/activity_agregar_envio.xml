@@ -99,7 +99,8 @@
             android:id="@+id/textView25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dir_origen" />
+            android:text="@string/dir_origen"
+            style="@style/field_description"/>
 
         <EditText
             android:id="@+id/editText13"
@@ -113,12 +114,28 @@
             android:id="@+id/textView26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dest" />
+            android:text="@string/dest"
+            style="@style/field_description"/>
 
         <Spinner
             android:id="@+id/spinner8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView38"
+            style="@style/field_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comentarios adicionales" />
+
+        <EditText
+            android:id="@+id/editText14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Introduzca comentario"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textView19"
