@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 public class Menu extends AppCompatActivity {
+
+    LinearLayout envios;
 
     public void regChofer(View view) {
         Intent toRegChofer = new Intent(Menu.this, AgregarChofer.class);
@@ -46,5 +49,15 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        envios = findViewById(R.id.envios);
+
+        envios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toEnvios = new Intent(Menu.this, EnviosProgramados.class);
+                startActivity(toEnvios);
+            }
+        });
     }
 }
