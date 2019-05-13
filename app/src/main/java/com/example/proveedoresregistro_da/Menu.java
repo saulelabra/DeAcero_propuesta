@@ -36,7 +36,7 @@ public class Menu extends AppCompatActivity {
     }
 
     public void logout (View view) {
-        Intent toLogScreen = new Intent (Menu.this, MainActivity.class);
+        Intent toLogScreen = new Intent (Menu.this, Login.class);
         startActivity(toLogScreen);
     }
 

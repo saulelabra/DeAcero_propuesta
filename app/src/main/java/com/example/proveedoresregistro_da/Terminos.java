@@ -13,7 +13,7 @@ public class Terminos extends AppCompatActivity {
     }
 
     public void declineTerms(View view) {
-        Intent toMain = new Intent(Terminos.this, MainActivity.class);
+        Intent toMain = new Intent(Terminos.this, Login.class);
         startActivity(toMain);
     }
 

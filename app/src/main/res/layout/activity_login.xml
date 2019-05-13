@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="@dimen/interface_padding"
-    tools:context=".MainActivity">
+    tools:context=".Login">
 
     <ImageView
         android:id="@+id/imageView"
@@ -39,7 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/login_btn"
-        android:text="@string/login_btn"
-        android:onClick="login"/>
+        android:text="@string/login_btn" />
 
 </LinearLayout>

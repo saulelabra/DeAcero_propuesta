@@ -26,7 +26,7 @@
             android:name=".AgregarContenedor"
             android:label="Agregar Contenedor" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
             android:label="Inicio de Sesión" />
         <activity
             android:name=".AgregarCamion"
