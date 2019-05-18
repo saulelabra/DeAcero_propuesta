@@ -1,14 +1,30 @@
 package com.example.proveedoresregistro_da;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Menu extends AppCompatActivity {
 
     LinearLayout envios;
+    Map<String, String> userData = new HashMap<String, String>();
+
+    TextView proveedor_TextView, direccion_TextView;
+
+    public void goToDetails (View view) {
+        Intent toDetails = new Intent(Menu.this, detalles_proveedor.class);
+        startActivity(toDetails);
+    }
 
     public void regChofer(View view) {
         Intent toRegChofer = new Intent(Menu.this, AgregarChofer.class);
@@ -51,6 +67,8 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         envios = findViewById(R.id.envios);
+        proveedor_TextView = findViewById(R.id.proveedor_tv);
+        direccion_TextView = findViewById(R.id.direccion_tv);
 
         envios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,5 +77,23 @@ public class Menu extends AppCompatActivity {
                 startActivity(toEnvios);
             }
         });
+
+        userData = recuperarDatosUsuario();
+
+        proveedor_TextView.setText(userData.get("nombreProveedor"));
+        direccion_TextView.setText(userData.get("direccion"));
+    }
+
+    public Map<String, String> recuperarDatosUsuario()
+    {
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        Map<String, String> userDataMap = new HashMap<String, String>();
+
+        userDataMap.put("usuario", userData.getString("usuario", "none"));
+        userDataMap.put("password", userData.getString("password", "none"));
+        userDataMap.put("nombreProveedor", userData.getString("nombreProveedor", "none"));
+        userDataMap.put("direccion", userData.getString("direccion", "none"));
+
+        return userDataMap;
     }
 }

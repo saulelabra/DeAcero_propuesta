@@ -17,5 +17,7 @@ public class AgregarCamion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_camion);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

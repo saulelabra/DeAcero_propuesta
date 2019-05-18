@@ -3,13 +3,11 @@ package com.example.proveedoresregistro_da;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class DetallesDeEnvio extends AppCompatActivity {
+public class ElementosRegistrados extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalles_de_envio);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_elementos_registrados);
     }
 }

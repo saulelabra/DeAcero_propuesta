@@ -4,6 +4,7 @@
     <string name="pswd_et">Contraseña</string>
     <string name="login_btn">Iniciar Sesión</string>
     <string name="logo">Logo_DeAcero</string>
+    <string name="transportista_tv">Transportista:</string>
     <string name="chofer_tv">Chofer:</string>
     <string name="camion_tv">Camión</string>
     <string name="contenedor_tv">Contenedor</string>

@@ -12,28 +12,49 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Contact_info"></activity>
-        <activity android:name=".Terminos" />
-        <activity android:name=".DetallesDeEnvio" />
-        <activity android:name=".EnviosProgramados" />
+        <activity android:name=".ElementosRegistrados"></activity>
+        <activity
+            android:name=".detalles_proveedor"
+            android:label="Detalles Proveedor"
+            android:parentActivityName=".Menu" />
+        <activity
+            android:name=".Contact_info"
+            android:label="Soporte"
+            android:parentActivityName=".Menu" />
+        <activity
+            android:name=".Terminos"
+            android:label="" />
+        <activity
+            android:name=".DetallesDeEnvio"
+            android:label="Detalles del Envío"
+            android:parentActivityName=".EnviosProgramados" />
+        <activity
+            android:name=".EnviosProgramados"
+            android:label="Envíos Programados"
+            android:parentActivityName=".Menu" />
         <activity
             android:name=".AgregarEnvio"
-            android:label="Agregar Envío" />
+            android:label="Agregar Envío"
+            android:parentActivityName=".Menu" />
         <activity
             android:name=".AgregarTransportista"
-            android:label="Agregar Transportista" />
+            android:label="Agregar Transportista"
+            android:parentActivityName=".Menu" />
         <activity
             android:name=".AgregarContenedor"
-            android:label="Agregar Contenedor" />
+            android:label="Agregar Contenedor"
+            android:parentActivityName=".Menu" />
         <activity
             android:name=".Login"
             android:label="Inicio de Sesión" />
         <activity
             android:name=".AgregarCamion"
-            android:label="Agregar Camión" />
+            android:label="Agregar Camión"
+            android:parentActivityName=".Menu" />
         <activity
             android:name=".AgregarChofer"
-            android:label="Agregar Chofer" />
+            android:label="Agregar Chofer"
+            android:parentActivityName=".Menu" />
         <activity
             android:name=".Menu"
             android:label="Menú principal" />

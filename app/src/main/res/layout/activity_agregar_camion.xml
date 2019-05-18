@@ -15,10 +15,11 @@
         android:text="Tipo"
         android:textColor="@color/colorPrimaryDark"/>
 
-    <Spinner
+    <EditText
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="Introduzca Tipo"/>
 
     <TextView
         android:id="@+id/textView8"

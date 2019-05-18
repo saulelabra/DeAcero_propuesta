@@ -1,7 +1,9 @@
 package com.example.proveedoresregistro_da;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,6 +93,8 @@ public class Login extends AppCompatActivity {
                         datosUsuario.getInstance().setUsuario(usuario);
                         datosUsuario.getInstance().setPassword(password);
 
+                        saveUserPreferences(usuario, password, username.getString("direccion").toString(), username.getString("nombreProveedor").toString());
+
                         Toast.makeText(Login.this,
                                 "Bienvenido " + username.getString("nombreProveedor").toString(), Toast.LENGTH_LONG).show();
                         Log.d(TAG,response.toString());
@@ -140,5 +144,18 @@ public class Login extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(peticion);
 
+    }
+
+    public void saveUserPreferences(String usuario, String password, String direccion, String nombreProveedor)
+    {
+        SharedPreferences datosUsuario = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor userDataEditor = datosUsuario.edit();
+
+        userDataEditor.putString("usuario", usuario);
+        userDataEditor.putString("password", password);
+        userDataEditor.putString("direccion", direccion);
+        userDataEditor.putString("nombreProveedor", nombreProveedor);
+
+        userDataEditor.commit();
     }
 }

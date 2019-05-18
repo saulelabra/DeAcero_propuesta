@@ -3,18 +3,43 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/elemento_layout_root"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
-        android:id="@+id/texto_a_mostrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:gravity="center"
-        style="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu"
-        />
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/interface_padding">
+
+            <TextView
+                android:id="@+id/precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu"
+                android:text="precio"/>
+
+            <TextView
+                android:id="@+id/id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu"
+                android:text="id"/>
+
+            <TextView
+                android:id="@+id/urlFoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu"
+                android:text="urlFoto"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

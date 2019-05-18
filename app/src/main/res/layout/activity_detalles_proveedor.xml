@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".detalles_proveedor"
+    android:padding="@dimen/interface_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/field_description"
+            android:text="Proveedor"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/nombreProveedor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="nombre"
+            style="@style/title"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/field_description"
+            android:text="Detalles"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/rfc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="rfc"
+            style="@style/subtitle"
+            />
+
+        <TextView
+            android:id="@+id/num_cuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="numero de cuenta"
+            style="@style/subtitle"
+            />
+        <TextView
+            android:id="@+id/direccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="direccion"
+            style="@style/subtitle"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

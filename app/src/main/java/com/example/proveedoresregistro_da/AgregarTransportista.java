@@ -16,5 +16,7 @@ public class AgregarTransportista extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_transportista);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

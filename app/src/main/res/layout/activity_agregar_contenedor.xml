@@ -15,10 +15,11 @@
         android:text="Tipo"
         android:textColor="@color/colorPrimaryDark"/>
 
-    <Spinner
+    <EditText
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="Introduzca tipo"/>
 
     <TextView
         android:id="@+id/textView8"
@@ -34,6 +35,18 @@
         android:ems="10"
         android:hint="Introduzca placas"
         android:inputType="textPersonName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:text="RFID"
+        style="@style/field_description"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduzca RFID"/>
 
     <Button
         android:id="@+id/button2"
