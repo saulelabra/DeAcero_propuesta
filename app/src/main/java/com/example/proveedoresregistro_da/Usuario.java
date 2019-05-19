@@ -1,7 +1,7 @@
 package com.example.proveedoresregistro_da;
 
 public class Usuario {
-    private String id;
+    private int id;
     private String nombreProveedor;
     private String direccion;
     private String rfc;
@@ -10,11 +10,11 @@ public class Usuario {
     private String usuario;
     private String password;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

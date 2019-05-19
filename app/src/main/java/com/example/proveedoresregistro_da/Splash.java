@@ -37,7 +37,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash);
 
-        checkIfLogged();
+        checkStoredCredentials();
 
         TimerTask tarea = new TimerTask() {
 
@@ -59,7 +59,7 @@ public class Splash extends AppCompatActivity {
         timer.schedule(tarea, tiempodeEspera);
     }
 
-    private void checkIfLogged()
+    private void checkStoredCredentials()
     {
         SharedPreferences datosUsuario = getSharedPreferences("userData", Context.MODE_PRIVATE);
 
@@ -71,7 +71,7 @@ public class Splash extends AppCompatActivity {
 
     private void usuarioLogin(final String usuario, final String password) {
 
-        String SERVICIO_LOGIN = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/login/servicio.login.php?";
+        String SERVICIO_LOGIN = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/servicio.login.php?";
         final String USUARIO = "usuario";
         final String PASSWORD = "password";
         final String TAG = "Datos";
@@ -92,6 +92,7 @@ public class Splash extends AppCompatActivity {
                     if (codigo_autenticacion.equals("01")) {
                         JSONObject username = (JSONObject) response.get(2);
 
+                        datosUsuario.getInstance().setId(username.getInt("id_usuario"));
                         datosUsuario.getInstance().setNombreProveedor(username.getString("nombreProveedor").toString());
                         datosUsuario.getInstance().setDireccion(username.getString("direccion").toString());
                         datosUsuario.getInstance().setRfc(username.getString("rfc"));
@@ -100,7 +101,7 @@ public class Splash extends AppCompatActivity {
                         datosUsuario.getInstance().setUsuario(usuario);
                         datosUsuario.getInstance().setPassword(password);
 
-                        saveUserPreferences(usuario, password, username.getString("direccion").toString(), username.getString("nombreProveedor").toString(), username.getString("rfc").toString(), username.getInt("cuenta_a_depositar"));
+                        saveUserPreferences(username.getInt("id_usuario"), usuario, password, username.getString("direccion").toString(), username.getString("nombreProveedor").toString(), username.getString("rfc").toString(), username.getInt("cuenta_a_depositar"));
 
                         Log.d(TAG,response.toString());
 
@@ -119,6 +120,11 @@ public class Splash extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override public void onErrorResponse(VolleyError error) {
                 Toast.makeText(Splash.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+
+                if(checkIfLogged())
+                {
+                    logged = true;
+                }
             }
         }) {
             @Override protected Map<String, String> getParams() throws AuthFailureError {
@@ -146,11 +152,12 @@ public class Splash extends AppCompatActivity {
 
     }
 
-    public void saveUserPreferences(String usuario, String password, String direccion, String nombreProveedor, String rfc, int num_cuenta)
+    public void saveUserPreferences(int id, String usuario, String password, String direccion, String nombreProveedor, String rfc, int num_cuenta)
     {
         SharedPreferences datosUsuario = getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences.Editor userDataEditor = datosUsuario.edit();
 
+        userDataEditor.putInt("id", id);
         userDataEditor.putString("usuario", usuario);
         userDataEditor.putString("password", password);
         userDataEditor.putString("direccion", direccion);
@@ -158,6 +165,17 @@ public class Splash extends AppCompatActivity {
         userDataEditor.putString("rfc", rfc);
         userDataEditor.putInt("cuenta_a_depositar", num_cuenta);
 
+        userDataEditor.putBoolean("logged", true);
+
         userDataEditor.commit();
+    }
+
+    public boolean checkIfLogged()
+    {
+        SharedPreferences datosUsuario = getSharedPreferences("userData", Context.MODE_PRIVATE);
+
+        boolean logged = datosUsuario.getBoolean("logged", false);
+
+        return logged;
     }
 }

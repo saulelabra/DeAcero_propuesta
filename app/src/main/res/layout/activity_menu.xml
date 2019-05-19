@@ -117,11 +117,11 @@
                     style="@style/field_description"/>
 
                 <TextView
-                    android:id="@+id/cantidad_envios_tv"
+                    android:id="@+id/cantidad_envios"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="10" />
+                    android:text="0" />
 
                 <Button
                     android:id="@+id/button"
@@ -154,11 +154,11 @@
                     android:text="Transportista" />
 
                 <TextView
-                    android:id="@+id/cantidad_transportistas_tv"
+                    android:id="@+id/cantidad_transportistas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="5" />
+                    android:text="0" />
 
                 <Button
                     android:id="@+id/button1"
@@ -190,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="5" />
+                    android:text="0" />
 
                 <Button
                     android:id="@+id/button2"
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="12" />
+                    android:text="0" />
 
                 <Button
                     android:id="@+id/button3"
@@ -254,7 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="10" />
+                    android:text="0" />
 
                 <Button
                     android:id="@+id/button4"

@@ -80,6 +80,58 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Transportista"
+            style="@style/field_description"/>
+
+        <TextView
+            android:id="@+id/transportista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/subtitle"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chofer"
+            style="@style/field_description"/>
+
+        <TextView
+            android:id="@+id/chofer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/subtitle"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Camion"
+            style="@style/field_description"/>
+
+        <TextView
+            android:id="@+id/camion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/subtitle"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Material"
+            style="@style/field_description"/>
+
+        <TextView
+            android:id="@+id/material"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/subtitle"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Comentarios"
             style="@style/field_description"/>
 

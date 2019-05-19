@@ -1,14 +1,29 @@
 package com.example.proveedoresregistro_da;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
@@ -19,7 +34,11 @@ public class Menu extends AppCompatActivity {
     LinearLayout envios, transportistas, choferes, camiones, contenedores;
     Map<String, String> userData = new HashMap<String, String>();
 
-    TextView proveedor_TextView, direccion_TextView;
+    TextView proveedor_TextView, direccion_TextView, num_envios_tv, num_transportistas_tv, num_choferes_tv, num_camiones_tv, num_contenedores_tv;
+
+    int num_envios, num_transportistas, num_choferes, num_camiones, num_contenedores;
+
+    public String COUNT_ENVIOS, COUNT_TRANSPORTISTAS, COUNT_CHOFERES, COUNT_CAMIONES, COUNT_CONTENEDORES;
 
     public void goToDetails (View view) {
         Intent toDetails = new Intent(Menu.this, detalles_proveedor.class);
@@ -77,6 +96,11 @@ public class Menu extends AppCompatActivity {
 
         proveedor_TextView = findViewById(R.id.proveedor_tv);
         direccion_TextView = findViewById(R.id.direccion_tv);
+        num_envios_tv = findViewById(R.id.cantidad_envios);
+        num_transportistas_tv = findViewById(R.id.cantidad_transportistas);
+        num_choferes_tv = findViewById(R.id.cantidad_choferes);
+        num_camiones_tv = findViewById(R.id.cantidad_camiones);
+        num_contenedores_tv = findViewById(R.id.cantidad_contenedores);
 
         envios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +150,75 @@ public class Menu extends AppCompatActivity {
 
         proveedor_TextView.setText(userData.get("nombreProveedor"));
         direccion_TextView.setText(userData.get("direccion"));
+
+        fillDashboard();
+    }
+
+    public void fillDashboard()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(Menu.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+
+        COUNT_ENVIOS = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/count.envio.php?";
+        COUNT_TRANSPORTISTAS = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/count.transportista.php?";
+        COUNT_CHOFERES = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/count.chofer.php?";
+        COUNT_CAMIONES = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/count.camion.php?";
+        COUNT_CONTENEDORES = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/count.contenedor.php?";
+
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        int idUsuario = userData.getInt("id", 0);
+
+        Log.d("debug_volley", "id usuario " + idUsuario);
+
+        String id = "usuario";
+
+        COUNT_ENVIOS = COUNT_ENVIOS + id + "=" + Integer.toString(idUsuario);
+        COUNT_TRANSPORTISTAS = COUNT_TRANSPORTISTAS + id + Integer.toString(idUsuario);
+        COUNT_CHOFERES = COUNT_CHOFERES + id + "=" + Integer.toString(idUsuario);
+        COUNT_CAMIONES = COUNT_CAMIONES + id + "=" + Integer.toString(idUsuario);
+        COUNT_CONTENEDORES = COUNT_CONTENEDORES + id + "=" + Integer.toString(idUsuario);
+
+        Log.d("debug_volley", "guardo direcciones");
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, COUNT_ENVIOS, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("debug_volley", "obtuvo respuesta");
+                barraDeProgreso.hide();
+                try{
+                    JSONArray arr_cantidad_envios = response.getJSONArray("Cantidad_envios");
+                    int cantidad_contenedores_int = arr_cantidad_envios.getJSONObject(0).getInt("cantidad");
+
+                    num_envios_tv.setText(Integer.toString(cantidad_contenedores_int));
+
+                }catch (JSONException e) {
+                    Toast.makeText(Menu.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(Menu.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 
     public Map<String, String> recuperarDatosUsuario()

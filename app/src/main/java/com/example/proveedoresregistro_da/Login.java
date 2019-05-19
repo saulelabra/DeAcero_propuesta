@@ -86,16 +86,17 @@ public class Login extends AppCompatActivity {
                     if (codigo_autenticacion.equals("01")) {
                         JSONObject username = (JSONObject) response.get(2);
 
-                        datosUsuario.getInstance().setId(username.getString("id_usuario").toString());
+                        datosUsuario.getInstance().setId(username.getInt("id_usuario"));
                         datosUsuario.getInstance().setNombreProveedor(username.getString("nombreProveedor").toString());
                         datosUsuario.getInstance().setDireccion(username.getString("direccion").toString());
                         datosUsuario.getInstance().setRfc(username.getString("rfc"));
                         datosUsuario.getInstance().setCuenta_a_depositar(username.getInt("cuenta_a_depositar"));
 
+
                         datosUsuario.getInstance().setUsuario(usuario);
                         datosUsuario.getInstance().setPassword(password);
 
-                        saveUserPreferences(usuario, password, username.getString("direccion").toString(), username.getString("nombreProveedor").toString(), username.getString("rfc").toString(), username.getInt("cuenta_a_depositar"));
+                        saveUserPreferences(username.getInt("id_usuario"), usuario, password, username.getString("direccion").toString(), username.getString("nombreProveedor").toString(), username.getString("rfc").toString(), username.getInt("cuenta_a_depositar"));
 
                         Toast.makeText(Login.this,
                                 "Bienvenido " + username.getString("nombreProveedor").toString(), Toast.LENGTH_LONG).show();
@@ -148,17 +149,20 @@ public class Login extends AppCompatActivity {
 
     }
 
-    public void saveUserPreferences(String usuario, String password, String direccion, String nombreProveedor, String rfc, int num_cuenta)
+    public void saveUserPreferences(int id, String usuario, String password, String direccion, String nombreProveedor, String rfc, int num_cuenta)
     {
         SharedPreferences datosUsuario = getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences.Editor userDataEditor = datosUsuario.edit();
 
+        userDataEditor.putInt("id", id);
         userDataEditor.putString("usuario", usuario);
         userDataEditor.putString("password", password);
         userDataEditor.putString("direccion", direccion);
         userDataEditor.putString("nombreProveedor", nombreProveedor);
         userDataEditor.putString("rfc", rfc);
         userDataEditor.putInt("cuenta_a_depositar", num_cuenta);
+
+        userDataEditor.putBoolean("logged", true);
 
         userDataEditor.commit();
     }
