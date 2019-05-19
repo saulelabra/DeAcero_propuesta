@@ -1,27 +1,19 @@
 package com.example.proveedoresregistro_da;
 
-import android.app.LauncherActivity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -30,11 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class EnviosProgramados extends AppCompatActivity implements RecyclerViewAdapter.onClickListenerRecycleItem {
+public class EnviosProgramados extends AppCompatActivity implements RecyclerViewAdapterEnvios.onClickListenerRecycleItem {
 
     private static final String REQUEST_URL_A_ARREGLO_JSON = "http://ubiquitous.csf.itesm.mx/~raulms/do/REST/ArregloJSON.app?count=2";
     private static String SERVICIO_ENVIOS = "http://ubiquitous.csf.itesm.mx/~raulms/do/REST/ArregloJSON.app?count=2";
@@ -90,11 +80,14 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
                     for(int i=0; i<enviosJSONArr.length(); i++)
                     {
                         JSONObject o = enviosJSONArr.getJSONObject(i);
-                        ListItem item = new ListItem(
-                                o.getString("precio"),
-                                o.getString("url"),
-                                o.getString("idFoto")
-                        );
+
+                        ArrayList<String> datos = new ArrayList<>();
+
+                        datos.add(o.getString("precio"));
+                        datos.add(o.getString("url"));
+                        datos.add(o.getString("idFoto"));
+
+                        ListItem item = new ListItem(datos);
 
                         listItems.add(item);
                     }
@@ -120,7 +113,7 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
 
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.envios_recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(listItems, this, this);
+        RecyclerViewAdapterEnvios adapter = new RecyclerViewAdapterEnvios(listItems, this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

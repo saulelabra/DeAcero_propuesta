@@ -12,7 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ElementosRegistrados"></activity>
+        <activity android:name=".DetallesContenedor"></activity>
+        <activity android:name=".DetallesCamion" />
+        <activity android:name=".DetallesChofer" />
+        <activity android:name=".DetallesTransportista" />
+        <activity
+            android:name=".ElementosRegistrados"
+            android:label="Elementos Registrados"
+            android:parentActivityName=".Menu" />
         <activity
             android:name=".detalles_proveedor"
             android:label="Detalles Proveedor"

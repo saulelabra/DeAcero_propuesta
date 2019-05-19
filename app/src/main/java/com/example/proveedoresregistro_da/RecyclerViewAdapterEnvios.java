@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapterEnvios extends RecyclerView.Adapter<RecyclerViewAdapterEnvios.ViewHolder> {
 
     private List<ListItem> listItems;
     private Context context;
     private onClickListenerRecycleItem monClickListenerRecycleItem;
 
-    public RecyclerViewAdapter(List<ListItem> listItems, Context context, onClickListenerRecycleItem monClickListenerRecycleItem) {
+    public RecyclerViewAdapterEnvios(List<ListItem> listItems, Context context, onClickListenerRecycleItem monClickListenerRecycleItem) {
         this.listItems = listItems;
         this.context = context;
 
@@ -38,9 +38,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
 
-        viewHolder.tv_precio.setText(listItem.getPrecio());
-        viewHolder.tv_id.setText(listItem.getId());
-        viewHolder.tv_urlFoto.setText(listItem.getUrlFoto());
+        viewHolder.tv_precio.setText(listItem.getDatos().get(0));
+        viewHolder.tv_id.setText(listItem.getDatos().get(1));
+        viewHolder.tv_urlFoto.setText(listItem.getDatos().get(2));
     }
 
     @Override

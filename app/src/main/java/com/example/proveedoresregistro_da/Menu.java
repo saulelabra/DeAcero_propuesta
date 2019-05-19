@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class Menu extends AppCompatActivity {
 
-    LinearLayout envios;
+    LinearLayout envios, transportistas, choferes, camiones, contenedores;
     Map<String, String> userData = new HashMap<String, String>();
 
     TextView proveedor_TextView, direccion_TextView;
@@ -52,6 +52,9 @@ public class Menu extends AppCompatActivity {
     }
 
     public void logout (View view) {
+
+        wipeUserData();
+
         Intent toLogScreen = new Intent (Menu.this, Login.class);
         startActivity(toLogScreen);
     }
@@ -67,6 +70,11 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         envios = findViewById(R.id.envios);
+        transportistas = findViewById(R.id.transportistas);
+        choferes = findViewById(R.id.choferes);
+        camiones = findViewById(R.id.camiones);
+        contenedores = findViewById(R.id.contenedores);
+
         proveedor_TextView = findViewById(R.id.proveedor_tv);
         direccion_TextView = findViewById(R.id.direccion_tv);
 
@@ -75,6 +83,42 @@ public class Menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent toEnvios = new Intent(Menu.this, EnviosProgramados.class);
                 startActivity(toEnvios);
+            }
+        });
+
+        transportistas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
+                toElementosReg.putExtra("opcion", 0);
+                startActivity(toElementosReg);
+            }
+        });
+
+        choferes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
+                toElementosReg.putExtra("opicion", 1);
+                startActivity(toElementosReg);
+            }
+        });
+
+        camiones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
+                toElementosReg.putExtra("opcion", 2);
+                startActivity(toElementosReg);
+            }
+        });
+
+        contenedores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
+                toElementosReg.putExtra("opcion", 3);
+                startActivity(toElementosReg);
             }
         });
 
@@ -95,5 +139,14 @@ public class Menu extends AppCompatActivity {
         userDataMap.put("direccion", userData.getString("direccion", "none"));
 
         return userDataMap;
+    }
+
+    public void wipeUserData()
+    {
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = userData.edit();
+
+        editor.clear();
+        editor.commit();
     }
 }

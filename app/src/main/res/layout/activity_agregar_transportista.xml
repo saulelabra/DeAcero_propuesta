@@ -16,7 +16,7 @@
         android:text="@string/trans_nom_tv" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -52,6 +52,13 @@
         android:ems="10"
         android:hint="@string/insert_mail"
         android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Soy mi propio transportista"
+        android:onClick="fillName"/>
 
     <Button
         android:id="@+id/save_btn"

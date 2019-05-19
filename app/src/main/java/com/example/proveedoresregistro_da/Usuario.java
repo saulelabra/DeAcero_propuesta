@@ -4,6 +4,8 @@ public class Usuario {
     private String id;
     private String nombreProveedor;
     private String direccion;
+    private String rfc;
+    private int cuenta_a_depositar;
 
     private String usuario;
     private String password;
@@ -54,6 +56,19 @@ public class Usuario {
         return info;
     }
 
+    public String getRfc() {
+        return rfc;
+    }
 
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
 
+    public int getCuenta_a_depositar() {
+        return cuenta_a_depositar;
+    }
+
+    public void setCuenta_a_depositar(int cuenta_a_depositar) {
+        this.cuenta_a_depositar = cuenta_a_depositar;
+    }
 }

@@ -9,6 +9,18 @@
     android:padding="@dimen/interface_padding">
 
     <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Transportista"
+        style="@style/field_description"/>
+
+    <Spinner
+        android:id="@+id/spinner10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

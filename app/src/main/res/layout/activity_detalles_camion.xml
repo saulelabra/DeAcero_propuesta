@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetallesDeEnvio"
+    tools:context=".DetallesCamion"
     android:padding="@dimen/interface_padding">
 
     <LinearLayout
@@ -15,11 +15,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID"
+            android:text="Tipo"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/id_envio"
+            android:id="@+id/tipo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -28,11 +28,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha de Registro"
+            android:text="Marca"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/fecha_reg"
+            android:id="@+id/marca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -41,11 +41,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha de llegada"
+            android:text="Modelo"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/fecha_llegada"
+            android:id="@+id/modelo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/subtitle"
@@ -54,11 +54,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Patio de Destino"
+            android:text="Placas"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/patio_destino"
+            android:id="@+id/placas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -67,11 +67,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dirección de origen"
+            android:text="Transportista"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/direccion_origen"
+            android:id="@+id/transportista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/subtitle"
@@ -80,20 +80,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comentarios"
+            android:text="RFID"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/comentarios"
+            android:id="@+id/rfid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Boleta de salida"
-            style="@style/field_description"/>
 
     </LinearLayout>
 

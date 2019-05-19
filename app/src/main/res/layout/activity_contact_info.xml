@@ -20,12 +20,4 @@
         android:text="Teléfono\ncorreo"
         android:layout_below="@+id/title"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Regresar"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="backToMenu"/>
-
 </RelativeLayout>

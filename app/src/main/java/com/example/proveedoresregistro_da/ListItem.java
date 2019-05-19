@@ -1,26 +1,22 @@
 package com.example.proveedoresregistro_da;
 
+import java.util.ArrayList;
+
 public class ListItem {
-    private String precio;
-    private String urlFoto;
-    private String id;
+
+    private ArrayList<String> datos;
+
+    public ListItem(ArrayList<String> datos)
+    {
+        this.datos = datos;
+    }
 
     public ListItem(String precio, String urlFoto, String id)
     {
-        this.precio = precio;
-        this.urlFoto = urlFoto;
-        this.id = id;
+        datos = new ArrayList<>();
     }
 
-    public String getPrecio() {
-        return precio;
-    }
-
-    public String getUrlFoto() {
-        return urlFoto;
-    }
-
-    public String getId() {
-        return id;
+    public ArrayList<String> getDatos(){
+        return datos;
     }
 }

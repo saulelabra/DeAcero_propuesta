@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetallesDeEnvio"
+    tools:context=".DetallesChofer"
     android:padding="@dimen/interface_padding">
 
     <LinearLayout
@@ -15,11 +15,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID"
+            android:text="Nombre"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/id_envio"
+            android:id="@+id/nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -28,11 +28,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha de Registro"
+            android:text="Apellido"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/fecha_reg"
+            android:id="@+id/apellido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -41,11 +41,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha de llegada"
+            android:text="Transportista"
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/fecha_llegada"
+            android:id="@+id/transportista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/subtitle"
@@ -54,45 +54,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Patio de Destino"
-            style="@style/field_description"/>
-
-        <TextView
-            android:id="@+id/patio_destino"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            style="@style/subtitle"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dirección de origen"
-            style="@style/field_description"/>
-
-        <TextView
-            android:id="@+id/direccion_origen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/subtitle"
-            android:layout_marginBottom="15dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comentarios"
-            style="@style/field_description"/>
-
-        <TextView
-            android:id="@+id/comentarios"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Boleta de salida"
+            android:text="INE/IFE"
             style="@style/field_description"/>
 
     </LinearLayout>
