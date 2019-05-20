@@ -39,6 +39,7 @@ public class AgregarCamion extends AppCompatActivity {
     String url_add_camion = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.camion.php?";
     ArrayList<ListItem> arr_trans;
     ArrayList<String> arr_trans_string;
+    ArrayList<String> trans_id;
     private Spinner spinner;
     EditText marca, modelo, tipo, color, rfid, placas;
     String marca_str, modelo_str, tipo_str, color_str, rfid_str, placas_str, transportista;
@@ -59,6 +60,7 @@ public class AgregarCamion extends AppCompatActivity {
 
         arr_trans = new ArrayList<>();
         arr_trans_string = new ArrayList<>();
+        trans_id = new ArrayList<>();
         getId();
         marca = findViewById(R.id.marca);
         modelo = findViewById(R.id.modelo);
@@ -67,8 +69,8 @@ public class AgregarCamion extends AppCompatActivity {
         rfid = findViewById(R.id.rfid);
         placas = findViewById(R.id.placas);
         btn_guardar = findViewById(R.id.btn_guardar);
-        recuperarTransportista();
 
+        recuperarTransportista();
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +81,9 @@ public class AgregarCamion extends AppCompatActivity {
                 color_str = color.getText().toString();
                 rfid_str = rfid.getText().toString();
                 placas_str = placas.getText().toString();
+                transportista = spinner.getSelectedItem().toString();
+                transportista = trans_id.get(arr_trans_string.indexOf(transportista));
+                guardarDatos();
             }
         });
     }
@@ -101,8 +106,9 @@ public class AgregarCamion extends AppCompatActivity {
 
                     for(int i=0; i<json_arr_trans.length(); i++)
                     {
-                        JSONObject fecha = json_arr_trans.getJSONObject(i);
-                        arr_trans_string.add(fecha.getString("nombre"));
+                        JSONObject json_obj = json_arr_trans.getJSONObject(i);
+                        arr_trans_string.add(json_obj.getString("nombre"));
+                        trans_id.add(json_obj.getString("id"));
                     }
 
                     fillSpinner();
@@ -147,5 +153,43 @@ public class AgregarCamion extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr_trans_string);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    private void guardarDatos()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarCamion.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+
+        url_add_camion = url_add_camion + "marca=" + marca_str + "&modelo=" + modelo_str + "&placas=" + placas_str + "&transportista=" + transportista +
+                "&rfid="+ rfid_str + "&tipo=" + tipo_str;
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_camion, null, new Response.Listener<JSONArray>() {
+            public void onResponse(JSONArray response) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarCamion.this, "Datos ingresados", Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarCamion.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 }
