@@ -2,8 +2,11 @@ package com.example.proveedoresregistro_da;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,14 +31,51 @@ import android.widget.Toast;
 
 import android.text.format.DateFormat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    int id;
+    String url_get_trans = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/transportistas.registrados.php?";
+    String url_get_choferes = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/choferes.registrados.php?";
+    String url_get_camion = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/camiones.registrados.php?";
+    String url_get_contenedor = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/contenedores.registrados.php?";
+    String url_get_patio = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/patios.lista.php?";
+    String url_add_envio = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.envio.php?";
+    ArrayList<ListItem> arr_trans;
+    ArrayList<String> arr_trans_string;
+    ArrayList<String> arr_chof_nom;
+    ArrayList<String> trans_apellido;
+    ArrayList<String> arr_camion;
+    ArrayList<String> arr_cont;
+    ArrayList<String> arr_patio;
+
+    ArrayList<String> arr_trans_id;
+    ArrayList<String> arr_chof_id;
+    ArrayList<String> arr_camion_id;
+    ArrayList<String> arr_cont_id;
+    ArrayList<String> arr_patio_id;
+
+
+    private Spinner spinner_t, spinner_c, spinner_cam, spinner_cont, spinner_patio;
     TextView seleccionar_fecha;
     int dia, mes, year, hora, minuto;
     Button add_material;
@@ -46,6 +86,8 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     ImageButton bol_sal_btn;
     ImageView bol_sal_img;
     Bitmap bol_sal_bit;
+    EditText edit_com, edit_or;
+    Button guardar;
     final int CODE_GALLERY_REQUEST = 999;
 
 
@@ -59,6 +101,27 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_envio);
 
+        arr_trans = new ArrayList<>();
+        arr_trans_string = new ArrayList<>();
+        trans_apellido = new ArrayList<>();
+        arr_chof_nom = new ArrayList<>();
+        arr_camion = new ArrayList<>();
+        arr_cont = new ArrayList<>();
+        arr_patio = new ArrayList<>();
+
+        arr_trans_id = new ArrayList<>();
+        arr_chof_id = new ArrayList<>();
+        arr_camion_id = new ArrayList<>();
+        arr_cont_id = new ArrayList<>();
+        arr_patio_id = new ArrayList<>();
+
+        getId();
+        recuperarTransportista();
+        recuperarChofer();
+        recuperarCamion();
+        recuperarContenedor();
+        recuperarPatio();
+
         add_material = findViewById(R.id.btn_add_mat);
         materiales = findViewById(R.id.Text_Mat);
         lista_mats = findViewById(R.id.list_materiales);
@@ -66,8 +129,11 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         cantidades = findViewById(R.id.Text_Cantidad);
         bol_sal_btn = findViewById(R.id.btn_bol);
         bol_sal_img = findViewById(R.id.image_bol);
+        edit_com = findViewById(R.id.editText_com);
+        edit_or = findViewById(R.id.editText_or);
+        guardar = findViewById(R.id.save_btn);
 
-        String[] arreglo_mats = new String[] {"Acero", "Aluminio"};
+        String[] arreglo_mats = new String[] {"Acero", "Aluminio", "Cobre"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arreglo_mats);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         lista_mats.setAdapter(adapter);
@@ -75,6 +141,14 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         seleccionar_fecha = findViewById(R.id.seleccionar_fecha);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarEnvio();
+                //Toast.makeText(AgregarEnvio.this, "hola", Toast.LENGTH_LONG).show();
+            }
+        });
 
         bol_sal_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,5 +263,362 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    void recuperarTransportista()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarEnvio.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+
+        url_get_trans = url_get_trans + "usuario=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_get_trans, null, new Response.Listener<JSONObject>() {
+            public void onResponse(JSONObject response) {
+                barraDeProgreso.hide();
+                try {
+                    JSONArray json_arr_trans = new JSONArray();
+
+                    json_arr_trans = response.getJSONArray("Transportistas_Registrados");
+
+                    for(int i=0; i<json_arr_trans.length(); i++)
+                    {
+                        JSONObject json_obj = json_arr_trans.getJSONObject(i);
+                        arr_trans_string.add(json_obj.getString("nombre"));
+                        arr_trans_id.add(json_obj.getString("id"));
+                    }
+
+                    fillSpinner();
+
+                } catch (JSONException e) {
+                    Toast.makeText(AgregarEnvio.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarEnvio.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    void recuperarChofer()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarEnvio.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+
+        url_get_choferes = url_get_choferes + "usuario=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_get_choferes, null, new Response.Listener<JSONObject>() {
+            public void onResponse(JSONObject response) {
+                barraDeProgreso.hide();
+                try {
+                    JSONArray json_arr_trans = new JSONArray();
+
+                    json_arr_trans = response.getJSONArray("Choferes_registrados");
+
+                    for(int i=0; i<json_arr_trans.length(); i++)
+                    {
+                        JSONObject json_obj = json_arr_trans.getJSONObject(i);
+                        arr_chof_nom.add(json_obj.getString("nombre"));
+                        arr_chof_id.add(json_obj.getString("id"));
+                    }
+
+                    fillSpinnerChof();
+
+                } catch (JSONException e) {
+                    Toast.makeText(AgregarEnvio.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarEnvio.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    void recuperarCamion()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarEnvio.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+
+        url_get_camion = url_get_camion + "usuario=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_get_camion, null, new Response.Listener<JSONObject>() {
+            public void onResponse(JSONObject response) {
+                barraDeProgreso.hide();
+                try {
+                    JSONArray json_arr_trans = new JSONArray();
+
+                    json_arr_trans = response.getJSONArray("Camiones_registrados");
+
+                    for(int i=0; i<json_arr_trans.length(); i++)
+                    {
+                        JSONObject json_obj = json_arr_trans.getJSONObject(i);
+                        arr_camion.add(json_obj.getString("placas"));
+                        arr_camion_id.add(json_obj.getString("id"));
+                    }
+
+                    fillSpinnerCamion();
+
+                } catch (JSONException e) {
+                    Toast.makeText(AgregarEnvio.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarEnvio.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    void recuperarContenedor()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarEnvio.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+
+        url_get_contenedor = url_get_contenedor + "usuario=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_get_contenedor, null, new Response.Listener<JSONObject>() {
+            public void onResponse(JSONObject response) {
+                barraDeProgreso.hide();
+                try {
+                    JSONArray json_arr_trans = new JSONArray();
+
+                    json_arr_trans = response.getJSONArray("Contenedores_registrados");
+
+                    for(int i=0; i<json_arr_trans.length(); i++)
+                    {
+                        JSONObject json_obj = json_arr_trans.getJSONObject(i);
+                        arr_cont.add(json_obj.getString("placas"));
+                        arr_cont_id.add(json_obj.getString("id"));
+                    }
+
+                    fillSpinnerContenedor();
+
+                } catch (JSONException e) {
+                    Toast.makeText(AgregarEnvio.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarEnvio.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    void recuperarPatio()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarEnvio.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+
+        url_get_patio = url_get_patio + "usuario=" + id;
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_get_patio, null, new Response.Listener<JSONObject>() {
+            public void onResponse(JSONObject response) {
+                barraDeProgreso.hide();
+                try {
+                    JSONArray json_arr_trans = new JSONArray();
+
+                    json_arr_trans = response.getJSONArray("Patios");
+
+                    for(int i=0; i<json_arr_trans.length(); i++)
+                    {
+                        JSONObject json_obj = json_arr_trans.getJSONObject(i);
+                        arr_patio.add(json_obj.getString("nombre"));
+                        //arr_patio_id.add(json_obj.getString("id"));
+                    }
+
+                    fillSpinnerPatio();
+
+                } catch (JSONException e) {
+                    Toast.makeText(AgregarEnvio.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarEnvio.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    private void getId() {
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        id = userData.getInt("id", 0);
+    }
+
+    private void fillSpinner() {
+        //Llenando spinner
+        spinner_t = findViewById(R.id.spinner_trans);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr_trans_string);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_t.setAdapter(adapter);
+    }
+
+    private void fillSpinnerChof() {
+        //Llenando spinner
+        spinner_c = findViewById(R.id.spinner_c);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr_chof_nom);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_c.setAdapter(adapter);
+    }
+
+    private void fillSpinnerCamion() {
+        //Llenando spinner
+        spinner_cam = findViewById(R.id.spinner_cam);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr_camion);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_cam.setAdapter(adapter);
+    }
+
+    private void fillSpinnerContenedor() {
+        //Llenando spinner
+        spinner_cont = findViewById(R.id.spinner_cont);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr_cont);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_cont.setAdapter(adapter);
+    }
+
+    private void fillSpinnerPatio() {
+        //Llenando spinner
+        spinner_patio = findViewById(R.id.spinner_patio);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr_patio);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_patio.setAdapter(adapter);
+    }
+
+    private void guardarEnvio()
+    {
+        final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarEnvio.this);
+        barraDeProgreso.setMessage("Cargando");
+        barraDeProgreso.show();
+        String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg";
+
+        url_add_envio = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.envio.php?" +
+                "id_camion=101&id_chofer=101&fecha_reg=2019-05-21&id_patio_dest=101&dir_origen=Av.delosPoetas&" +
+                "url_boleta=http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg&" +
+                "fecha_llegada=2019-05-21&estado=-1&id_policia=0&comentario=comentario&id_usuario=1&comentarios_check=-1&" +
+                "id_transportista=101&id_contenedor=101&cantidad=10&id_material=6&id_envio=101";
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_envio, null, new Response.Listener<JSONArray>() {
+            public void onResponse(JSONArray response) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarEnvio.this, "Datos ingresados", Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(AgregarEnvio.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 }
