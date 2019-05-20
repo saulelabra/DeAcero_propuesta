@@ -12,10 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetallesContenedor"></activity>
-        <activity android:name=".DetallesCamion" />
-        <activity android:name=".DetallesChofer" />
-        <activity android:name=".DetallesTransportista" />
+        <activity
+            android:name=".DetallesContenedor"
+            android:label="Detalles del Contenedor" />
+        <activity
+            android:name=".DetallesCamion"
+            android:label="Detalles del Camión" />
+        <activity
+            android:name=".DetallesChofer"
+            android:label="Detalles del Chofer" />
+        <activity
+            android:name=".DetallesTransportista"
+            android:label="Detalles del Transportista" />
         <activity
             android:name=".ElementosRegistrados"
             android:label="Elementos Registrados"

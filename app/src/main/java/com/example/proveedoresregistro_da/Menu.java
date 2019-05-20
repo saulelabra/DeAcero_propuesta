@@ -36,9 +36,9 @@ public class Menu extends AppCompatActivity {
 
     TextView proveedor_TextView, direccion_TextView, num_envios_tv, num_transportistas_tv, num_choferes_tv, num_camiones_tv, num_contenedores_tv;
 
-    int num_envios, num_transportistas, num_choferes, num_camiones, num_contenedores;
-
     public String COUNT_ENVIOS, COUNT_TRANSPORTISTAS, COUNT_CHOFERES, COUNT_CAMIONES, COUNT_CONTENEDORES;
+
+    ProgressDialog barraDeProgreso;
 
     public void goToDetails (View view) {
         Intent toDetails = new Intent(Menu.this, detalles_proveedor.class);
@@ -102,6 +102,8 @@ public class Menu extends AppCompatActivity {
         num_camiones_tv = findViewById(R.id.cantidad_camiones);
         num_contenedores_tv = findViewById(R.id.cantidad_contenedores);
 
+        barraDeProgreso = new ProgressDialog(Menu.this);
+
         envios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +125,7 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
-                toElementosReg.putExtra("opicion", 1);
+                toElementosReg.putExtra("opcion", 1);
                 startActivity(toElementosReg);
             }
         });
@@ -156,7 +158,6 @@ public class Menu extends AppCompatActivity {
 
     public void fillDashboard()
     {
-        final ProgressDialog barraDeProgreso = new ProgressDialog(Menu.this);
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
 
@@ -174,13 +175,22 @@ public class Menu extends AppCompatActivity {
         String id = "usuario";
 
         COUNT_ENVIOS = COUNT_ENVIOS + id + "=" + Integer.toString(idUsuario);
-        COUNT_TRANSPORTISTAS = COUNT_TRANSPORTISTAS + id + Integer.toString(idUsuario);
+        COUNT_TRANSPORTISTAS = COUNT_TRANSPORTISTAS + id + "=" + Integer.toString(idUsuario);
         COUNT_CHOFERES = COUNT_CHOFERES + id + "=" + Integer.toString(idUsuario);
         COUNT_CAMIONES = COUNT_CAMIONES + id + "=" + Integer.toString(idUsuario);
         COUNT_CONTENEDORES = COUNT_CONTENEDORES + id + "=" + Integer.toString(idUsuario);
 
         Log.d("debug_volley", "guardo direcciones");
 
+        count_envios(COUNT_ENVIOS);
+        count_transportistas(COUNT_TRANSPORTISTAS);
+        count_choferes(COUNT_CHOFERES);
+        count_camiones(COUNT_CAMIONES);
+        count_contenedores(COUNT_CONTENEDORES);
+    }
+
+    public void count_envios(String COUNT_ENVIOS)
+    {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, COUNT_ENVIOS, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -188,9 +198,177 @@ public class Menu extends AppCompatActivity {
                 barraDeProgreso.hide();
                 try{
                     JSONArray arr_cantidad_envios = response.getJSONArray("Cantidad_envios");
-                    int cantidad_contenedores_int = arr_cantidad_envios.getJSONObject(0).getInt("cantidad");
+                    int cantidad_envios_int = arr_cantidad_envios.getJSONObject(0).getInt("cantidad");
 
-                    num_envios_tv.setText(Integer.toString(cantidad_contenedores_int));
+                    num_envios_tv.setText(Integer.toString(cantidad_envios_int));
+
+                }catch (JSONException e) {
+                    Toast.makeText(Menu.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(Menu.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    public void count_transportistas(String COUNT_TRANSPORTISTAS)
+    {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, COUNT_TRANSPORTISTAS, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("debug_volley", "obtuvo respuesta");
+                barraDeProgreso.hide();
+                try{
+                    JSONArray arr_cantidad_transportistas = response.getJSONArray("Transportista");
+                    int cantidad_transportistas_int = arr_cantidad_transportistas.getJSONObject(0).getInt("numero_transportistas");
+
+                    num_transportistas_tv.setText(Integer.toString(cantidad_transportistas_int));
+
+                }catch (JSONException e) {
+                    Toast.makeText(Menu.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(Menu.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    public void count_choferes(String COUNT_CHOFERES)
+    {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, COUNT_CHOFERES, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("debug_volley", "obtuvo respuesta");
+                barraDeProgreso.hide();
+                try{
+                    JSONArray arr_cantidad_choferes = response.getJSONArray("Cantidad_choferes");
+                    int cantidad_choferes_int = arr_cantidad_choferes.getJSONObject(0).getInt("numero_choferes");
+
+                    num_choferes_tv.setText(Integer.toString(cantidad_choferes_int));
+
+                }catch (JSONException e) {
+                    Toast.makeText(Menu.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(Menu.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    public void count_camiones(String COUNT_CAMIONES)
+    {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, COUNT_CAMIONES, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("debug_volley", "obtuvo respuesta");
+                barraDeProgreso.hide();
+                try{
+                    JSONArray arr_cantidad_camiones = response.getJSONArray("Cantidad_camiones");
+                    int cantidad_camiones_int = arr_cantidad_camiones.getJSONObject(0).getInt("numero_camiones");
+
+                    num_camiones_tv.setText(Integer.toString(cantidad_camiones_int));
+
+                }catch (JSONException e) {
+                    Toast.makeText(Menu.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                barraDeProgreso.hide();
+                Toast.makeText(Menu.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    public void count_contenedores(String COUNT_CONTENEDORES)
+    {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, COUNT_CONTENEDORES, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("debug_volley", "obtuvo respuesta");
+                barraDeProgreso.hide();
+                try{
+                    JSONArray arr_cantidad_contenedores = response.getJSONArray("Cantidad_contenedores");
+                    int cantidad_contenedores_int = arr_cantidad_contenedores.getJSONObject(0).getInt("numero_contenedores");
+
+                    num_contenedores_tv.setText(Integer.toString(cantidad_contenedores_int));
 
                 }catch (JSONException e) {
                     Toast.makeText(Menu.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();

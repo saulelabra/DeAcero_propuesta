@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity {
         barraDeProgreso.setMessage("Iniciando sesion...");
         barraDeProgreso.show();
 
-        SERVICIO_LOGIN = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/login/servicio.login.php?";
+        SERVICIO_LOGIN = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/servicio.login.php?";
 
         usuario = editTextUsuario.getText().toString().trim();
         password = editTextPassword.getText().toString().trim();
@@ -128,12 +128,6 @@ public class Login extends AppCompatActivity {
             //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
             @Override public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-
-                //Hasheando desde la aplicación
-                //String credentiales = usuario + ":" + password;
-                //String autenticacion = "Basic " + Base64.encodeToString(credentiales.getBytes(), Base64.NO_WRAP);
-                //headers.put("Content-Type", "application/json");
-                //headers.put("Authorization", authentication);
 
                 //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
                 String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";

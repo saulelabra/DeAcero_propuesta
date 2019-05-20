@@ -1,7 +1,9 @@
 package com.example.proveedoresregistro_da;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,12 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -22,20 +28,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ElementosRegistrados extends AppCompatActivity implements RecyclerViewAdapterElementos.onClickListenerRecycleItem {
 
-    private static String SERVICIO_TRANSPORTISTAS = "http://ubiquitous.csf.itesm.mx/~raulms/do/REST/ArregloJSON.app?count=2";
-    private static String SERVICIO_CHOFERES = "http://ubiquitous.csf.itesm.mx/~raulms/do/REST/ArregloJSON.app?count=2";
-    private static String SERVICIO_CAMIONES = "http://ubiquitous.csf.itesm.mx/~raulms/do/REST/ArregloJSON.app?count=2";
-    private static String SERVICIO_CONTENEDORES = "http://ubiquitous.csf.itesm.mx/~raulms/do/REST/ArregloJSON.app?count=2";
+    private static String SERVICIO_TRANSPORTISTAS = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/transportistas.registrados.php?";
+    private static String SERVICIO_CHOFERES = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/choferes.registrados.php?";
+    private static String SERVICIO_CAMIONES = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/camiones.registrados.php?";
+    private static String SERVICIO_CONTENEDORES = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/contenedores.registrados.php?";
 
     ProgressDialog barradeProgreso;
     private static final String TAG = "ElementosRegistrados";
     private Button recuperarButton;
+    private TextView title;
 
-    private JSONArray enviosJSONArr;
     public List<ListItem> listItems;
 
     private int opcion;
@@ -55,20 +63,23 @@ public class ElementosRegistrados extends AppCompatActivity implements RecyclerV
 
         barradeProgreso = new ProgressDialog(this);
         recuperarButton = findViewById(R.id.button_recuperar);
+        title = findViewById(R.id.title);
 
-        volleyJsonArrayRequest(opcion);
+        final int id_usuario = getIdUser();
+
+        fillData(opcion, id_usuario);
 
         //Recupera un JSONArray y lo muestra en RecycleView
         recuperarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                volleyJsonArrayRequest(opcion);
+                fillData(opcion, id_usuario);
             }
         });
 
     }
 
-    private void volleyJsonArrayRequest(final int opcion) {
+    private void fillData(final int opcion, int id_usuario) {
 
         String api_url = new String();
 
@@ -80,31 +91,53 @@ public class ElementosRegistrados extends AppCompatActivity implements RecyclerV
         switch (opcion)
         {
             case 0:
-                api_url = SERVICIO_TRANSPORTISTAS;
+                title.setText("Transportistas");
+                api_url = SERVICIO_TRANSPORTISTAS + "usuario=" + id_usuario;
                 break;
             case 1:
-                api_url = SERVICIO_CHOFERES;
+                title.setText("Choferes");
+                api_url = SERVICIO_CHOFERES + "usuario=" + id_usuario;
                 break;
             case 2:
-                api_url = SERVICIO_CAMIONES;
+                title.setText("Camiones");
+                api_url = SERVICIO_CAMIONES + "usuario=" + id_usuario;
                 break;
             case 3:
-                api_url = SERVICIO_CONTENEDORES;
+                title.setText("Contenedores");
+                api_url = SERVICIO_CONTENEDORES + "usuario=" + id_usuario;
                 break;
         }
 
         Log.d(TAG,api_url.toString());
 
-        JsonArrayRequest peticion = new JsonArrayRequest(api_url, new Response.Listener<JSONArray>() {
+        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, api_url, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
                 barraDeProgreso.hide();
                 try {
-                    enviosJSONArr = response;
+                    JSONArray array = new JSONArray();
 
-                    for(int i=0; i<enviosJSONArr.length(); i++)
+                    switch (opcion)
                     {
-                        JSONObject o = enviosJSONArr.getJSONObject(i);
+                        case 0:
+                            array = response.getJSONArray("Transportistas_Registrados");
+                            break;
+                        case 1:
+                            array = response.getJSONArray("Choferes_registrados");
+                            break;
+                        case 2:
+                            array = response.getJSONArray("Camiones_registrados");
+                            break;
+                        case 3:
+                            array = response.getJSONArray("Contenedores_registrados");
+                            break;
+                    }
+
+                    listItems.clear();
+
+                    for(int i=0; i<array.length(); i++)
+                    {
+                        JSONObject o = array.getJSONObject(i);
 
                         ArrayList<String> datos = new ArrayList<>();
 
@@ -128,10 +161,6 @@ public class ElementosRegistrados extends AppCompatActivity implements RecyclerV
                                 datos.add(o.getString("tipo"));
                         }
 
-                        /*datos.add(o.getString("precio"));
-                        datos.add(o.getString("url"));
-                        datos.add(o.getString("idFoto"));*/
-
                         ListItem item = new ListItem(datos);
 
                         listItems.add(item);
@@ -149,11 +178,31 @@ public class ElementosRegistrados extends AppCompatActivity implements RecyclerV
                 barraDeProgreso.hide();
                 Toast.makeText(ElementosRegistrados.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
             }
-        });
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(peticion);
 
+    }
+
+    private int getIdUser()
+    {
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        int idUser = userData.getInt("id", 0);
+
+        return idUser;
     }
 
     private void initRecyclerView() {
@@ -163,9 +212,26 @@ public class ElementosRegistrados extends AppCompatActivity implements RecyclerV
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    //@Override
     public void onClickRecycle(int position) {
-        Intent toItemDetails = new Intent(this, DetallesDeEnvio.class);
-        startActivity(toItemDetails);
+
+        switch(opcion)
+        {
+            case 0:
+                Intent toDetallesTransportista = new Intent(this, DetallesTransportista.class);
+                startActivity(toDetallesTransportista);
+                break;
+            case 1:
+                Intent toDetallesChofer = new Intent(this, DetallesChofer.class);
+                startActivity(toDetallesChofer);
+                break;
+            case 2:
+                Intent toDetallesCamion = new Intent(this, DetallesCamion.class);
+                startActivity(toDetallesCamion);
+                break;
+            case 3:
+                Intent toDetallesContenedor = new Intent(this, DetallesContenedor.class);
+                startActivity(toDetallesContenedor);
+                break;
+        }
     }
 }
