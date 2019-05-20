@@ -30,10 +30,14 @@ public class detalles_proveedor extends AppCompatActivity {
 
         userData = recuperarDatosUsuario();
 
+        String textoRFC = "RFC: " + userData.get("rfc");
+        String textoCuenta = "Cuenta de deposito: " + userData.get("cuenta_a_depositar");
+        String textoDireccion = "Dirección: " + userData.get("direccion");
+
         nombreProveedor.setText(userData.get("nombreProveedor"));
-        rfc.setText(userData.get("rfc"));
-        num_cuenta.setText(userData.get("cuenta_a_depositar"));
-        direccion.setText(userData.get("direccion"));
+        rfc.setText(textoRFC);
+        num_cuenta.setText(textoCuenta);
+        direccion.setText(textoDireccion);
     }
 
     public Map<String, String> recuperarDatosUsuario()
