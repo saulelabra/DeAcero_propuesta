@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -48,7 +50,7 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
 
     private JSONArray enviosJSONArr;
     public List<ListItem> listItems;
-    public ArrayList<String> listDates;
+    public List<String> listDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +61,10 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listItems = new ArrayList<>();
-        listDates = new ArrayList<>();
+        listDates = new ArrayList<String>();
 
         getId();
         getDates();
-        fillSpinner();
 
         barradeProgreso = new ProgressDialog(this);
         recuperarButton = findViewById(R.id.button_recuperar);
@@ -80,14 +81,14 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
     private void fillSpinner() {
         //Llenando spinner
         spinner = findViewById(R.id.date_selector);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listDates);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listDates);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(parent.getContext(), "Seleccionado: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(parent.getContext(), "Seleccionado: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -117,6 +118,8 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
                         JSONObject fecha = arr_fechas.getJSONObject(i);
                         listDates.add(fecha.getString("fecha_entrega"));
                     }
+
+                    fillSpinner();
 
                 } catch (JSONException e) {
                     Toast.makeText(EnviosProgramados.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
