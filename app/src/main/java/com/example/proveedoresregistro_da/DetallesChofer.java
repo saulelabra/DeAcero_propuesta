@@ -3,6 +3,7 @@ package com.example.proveedoresregistro_da;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,8 @@ import java.util.Map;
 
 public class DetallesChofer extends AppCompatActivity {
 
-    TextView nombre, apellido, transportista;
+    String ine_url_tmp;
+    TextView nombre, apellido, transportista, ine;
     String SERVICIO_DETALLES_CHOFER = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/chofer.detalles.php?";
     int id;
 
@@ -35,6 +37,7 @@ public class DetallesChofer extends AppCompatActivity {
         nombre = findViewById(R.id.nombre);
         apellido = findViewById(R.id.apellido);
         transportista = findViewById(R.id.transportista);
+        ine = findViewById(R.id.ine);
 
         fillDetails();
     }
@@ -61,6 +64,23 @@ public class DetallesChofer extends AppCompatActivity {
                     nombre.setText(object.getString("nombre"));
                     apellido.setText(object.getString("apellido"));
                     transportista.setText(object.getString("transportista"));
+                    ine_url_tmp = object.getString("ine");
+
+                    String substring = "/home/pddm-1024595/html_container";
+                    String newString = "http://ubiquitous.csf.itesm.mx/~pddm-1024595";
+
+                    int position_of_coincidence = ine_url_tmp.indexOf(substring);
+
+                    if(position_of_coincidence == 0)
+                    {
+                        int size_substring = substring.length();
+                        String stringToAppend = ine_url_tmp.substring(size_substring);
+
+                        newString = newString + stringToAppend;
+
+                    }
+
+                    ine.setText(newString);
 
                 }catch (JSONException e) {
                     Toast.makeText(DetallesChofer.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             style="@style/field_description"/>
 
         <TextView
-            android:id="@+id/fecha_reg"
+            android:id="@+id/fecha_registro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -94,40 +94,201 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chofer"
-            style="@style/field_description"/>
+            style="@style/field_description"
+            android:layout_marginBottom="15dp"/>
 
-        <TextView
-            android:id="@+id/chofer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/subtitle"
-            android:layout_marginBottom="15dp"/>
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/nombre_chofer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Apellido"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/apellido_chofer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="INE"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/ine_chofer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Camion"
-            style="@style/field_description"/>
+            style="@style/field_description"
+            android:layout_marginBottom="15dp"/>
 
-        <TextView
-            android:id="@+id/camion"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/subtitle"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/tipo_camion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Marca"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/marca_camion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Modelo"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/modelo_camion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Placas"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/placas_camion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RFID"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/rfid_camion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contenedor"
+            style="@style/field_description"
             android:layout_marginBottom="15dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Placas"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/placas_contenedor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/tipo_contenedor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RFID"
+                style="@style/field_description"/>
+
+            <TextView
+                android:id="@+id/rfid_contenedor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:layout_marginBottom="15dp"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Material"
-            style="@style/field_description"/>
+            style="@style/field_description"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:id="@+id/material"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/subtitle"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -147,6 +308,12 @@
             android:text="Boleta de salida"
             style="@style/field_description"/>
 
+        <TextView
+            android:id="@+id/boleta_salida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"/>
+
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

@@ -38,10 +38,11 @@ import java.util.Map;
 
 public class EnviosProgramados extends AppCompatActivity implements RecyclerViewAdapterEnvios.onClickListenerRecycleItem {
 
-    private static String SERVICIO_ENVIOS = "http://ubiquitous.csf.itesm.mx/~raulms/do/REST/ArregloJSON.app?count=2";
+    private static String SERVICIO_ENVIOS = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/envios.programados.por.fecha.php?";
     private static String SERVICIO_FECHAS = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/envios.programados.fecha.php?";
 
     private int id;
+    String selected_date;
 
     ProgressDialog barradeProgreso;
     private static final String TAG = "EnviosProgramados";
@@ -88,7 +89,8 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(parent.getContext(), "Seleccionado: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                selected_date = parent.getItemAtPosition(position).toString();
+                recuperarEnvios();
             }
 
             @Override
@@ -159,24 +161,29 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
 
         Log.d(TAG,SERVICIO_ENVIOS.toString());
 
-        JsonArrayRequest peticion = new JsonArrayRequest(SERVICIO_ENVIOS, new Response.Listener<JSONArray>() {
+        SERVICIO_ENVIOS = SERVICIO_ENVIOS + "id=" + id + "&" + "fecha='" + selected_date + "'";
+
+        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, SERVICIO_ENVIOS, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
                 barraDeProgreso.hide();
                 try {
-                    enviosJSONArr = response;
+                    JSONArray arr_envios = response.getJSONArray("Envios_programados");
 
-                    for(int i=0; i<enviosJSONArr.length(); i++)
+                    listItems.clear();
+
+                    for(int i=0; i<arr_envios.length(); i++)
                     {
-                        JSONObject o = enviosJSONArr.getJSONObject(i);
+                        JSONObject o = arr_envios.getJSONObject(i);
 
                         ArrayList<String> datos = new ArrayList<>();
 
-                        datos.add(o.getString("precio"));
-                        datos.add(o.getString("url"));
-                        datos.add(o.getString("idFoto"));
+                        datos.add(o.getString("no_envio"));
+                        datos.add(o.getString("patio"));
+                        datos.add(o.getString("entrega"));
 
                         ListItem item = new ListItem(datos);
+                        item.setId(o.getInt("no_envio"));
 
                         listItems.add(item);
                     }
@@ -193,11 +200,22 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
                 barraDeProgreso.hide();
                 Toast.makeText(EnviosProgramados.this, "Error en: " + error.toString(), Toast.LENGTH_LONG).show();
             }
-        });
+        }) {
+            //getHeaders() se ejecuta automáticamente en cuanto se ejecuta la actividad
+            @Override public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                //Hasheando desde el servidor (php) cifrado para el acceso de la carpeta
+                String credenciales = "Basic YTAxMDIwNzI1OjAwMDA=";
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", credenciales);
+
+                return headers;
+            }
+        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(peticion);
-
     }
 
     private void getId() {
@@ -215,6 +233,7 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
     @Override
     public void onClickRecycle(int position) {
         Intent toItemDetails = new Intent(this, DetallesDeEnvio.class);
+        toItemDetails.putExtra("id", listItems.get(position).getId());
         startActivity(toItemDetails);
     }
 }
