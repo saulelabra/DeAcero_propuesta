@@ -1,8 +1,16 @@
 package com.example.proveedoresregistro_da;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -11,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -18,6 +28,8 @@ import android.widget.Toast;
 
 import android.text.format.DateFormat;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -31,6 +43,11 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     Spinner lista_mats;
     EditText cantidad;
     ArrayList<Pair<String, String>> mats_cant = new ArrayList<>();
+    ImageButton bol_sal_btn;
+    ImageView bol_sal_img;
+    Bitmap bol_sal_bit;
+    final int CODE_GALLERY_REQUEST = 999;
+
 
     public void guardarEnvioYReg(View view) {
         Intent goToMenu = new Intent(AgregarEnvio.this, Menu.class);
@@ -47,6 +64,8 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         lista_mats = findViewById(R.id.list_materiales);
         cantidad = findViewById(R.id.cantidad);
         cantidades = findViewById(R.id.Text_Cantidad);
+        bol_sal_btn = findViewById(R.id.btn_bol);
+        bol_sal_img = findViewById(R.id.image_bol);
 
         String[] arreglo_mats = new String[] {"Acero", "Aluminio"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arreglo_mats);
@@ -56,6 +75,17 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         seleccionar_fecha = findViewById(R.id.seleccionar_fecha);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        bol_sal_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityCompat.requestPermissions(
+                        AgregarEnvio.this,
+                        new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                        CODE_GALLERY_REQUEST
+                );
+            }
+        });
     }
 
     public void btn_ingresar_fecha (View view)
@@ -117,5 +147,47 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
 
         materiales.setText("Materiales:\n"+mats);
         cantidades.setText("Cantidad:\n"+cants);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == CODE_GALLERY_REQUEST)
+        {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "select image"), CODE_GALLERY_REQUEST);
+            }else
+            {
+                Toast.makeText(getApplicationContext(), "No permission", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == CODE_GALLERY_REQUEST && resultCode == RESULT_OK && data != null)
+        {
+            Uri filepath = data.getData();
+            InputStream inputStream = null;
+            try {
+                inputStream = getContentResolver().openInputStream(filepath);
+                bol_sal_bit = BitmapFactory.decodeStream(inputStream);
+                bol_sal_img.setImageBitmap(bol_sal_bit);
+                bol_sal_img.setVisibility(View.VISIBLE);
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
