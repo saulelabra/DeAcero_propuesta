@@ -57,12 +57,11 @@
             android:text="INE/IFE"
             style="@style/field_description"/>
 
-        <TextView
-            android:id="@+id/ine"
+        <ImageView
+            android:id="@+id/ine_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/subtitle"
-            android:layout_marginBottom="15dp"/>
+            app:srcCompat="@drawable/background_transparent" />
 
     </LinearLayout>
 

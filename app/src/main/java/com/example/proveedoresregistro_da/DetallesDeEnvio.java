@@ -26,7 +26,7 @@ import java.util.Map;
 public class DetallesDeEnvio extends AppCompatActivity {
 
     TextView id_envio, fecha_registro, fecha_llegada, patio_destino, direccion_origen, transportista, nombre_chofer, apellido_chofer, ine_chofer, tipo_camion, marca_camion, modelo_camion, placas_camion, rfid_camion, placas_contenedor, tipo_contenedor, rfid_contenedor, material, comentarios, boleta_salida;
-    String SERVICIO_DETALLES_ENVIO = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/envio.detalles.php?usuario=2&envio_id=105";
+    String SERVICIO_DETALLES_ENVIO = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/envio.detalles.php?";
     int id, idUsuario;
 
     @Override

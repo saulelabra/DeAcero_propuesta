@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +27,8 @@ import java.util.Map;
 public class DetallesChofer extends AppCompatActivity {
 
     String ine_url_tmp;
-    TextView nombre, apellido, transportista, ine;
+    TextView nombre, apellido, transportista;
+    ImageView image_ine;
     String SERVICIO_DETALLES_CHOFER = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/chofer.detalles.php?";
     int id;
 
@@ -37,7 +40,8 @@ public class DetallesChofer extends AppCompatActivity {
         nombre = findViewById(R.id.nombre);
         apellido = findViewById(R.id.apellido);
         transportista = findViewById(R.id.transportista);
-        ine = findViewById(R.id.ine);
+
+        image_ine = findViewById(R.id.ine_image);
 
         fillDetails();
     }
@@ -77,10 +81,10 @@ public class DetallesChofer extends AppCompatActivity {
                         String stringToAppend = ine_url_tmp.substring(size_substring);
 
                         newString = newString + stringToAppend;
-
                     }
 
-                    ine.setText(newString);
+                    Picasso.get().load(newString).into(image_ine);
+
 
                 }catch (JSONException e) {
                     Toast.makeText(DetallesChofer.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();

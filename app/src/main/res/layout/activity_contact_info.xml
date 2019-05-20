@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Contact_info"
     android:padding="@dimen/interface_padding">
 
@@ -12,12 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Información de contacto"
-        style="@style/title"/>
+        style="@style/title"
+        android:layout_marginBottom="15dp"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Teléfono\ncorreo"
-        android:layout_below="@+id/title"/>
+        android:layout_height="wrap_content"
+        android:text="Teléfono"
+        style="@style/field_description"/>
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="5584353201"
+        style="@style/subtitle"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Correo"
+        style="@style/field_description"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="soporte@deacero.mx"
+        style="@style/subtitle"
+        android:layout_marginBottom="15dp"/>
+
+</LinearLayout>

@@ -70,6 +70,9 @@ public class AgregarContenedor extends AppCompatActivity {
                 transportista = spinner.getSelectedItem().toString();
                 transportista = trans_id.get(arr_trans_string.indexOf(transportista));
                 guardarDatos();
+
+                Intent toMenu = new Intent (AgregarContenedor.this, Menu.class);
+                startActivity(toMenu);
             }
         });
     }
