@@ -162,6 +162,7 @@ public class ElementosRegistrados extends AppCompatActivity implements RecyclerV
                         }
 
                         ListItem item = new ListItem(datos);
+                        item.setId(o.getInt("id"));
 
                         listItems.add(item);
                     }
@@ -218,18 +219,22 @@ public class ElementosRegistrados extends AppCompatActivity implements RecyclerV
         {
             case 0:
                 Intent toDetallesTransportista = new Intent(this, DetallesTransportista.class);
+                toDetallesTransportista.putExtra("id", listItems.get(position).getId());
                 startActivity(toDetallesTransportista);
                 break;
             case 1:
                 Intent toDetallesChofer = new Intent(this, DetallesChofer.class);
+                toDetallesChofer.putExtra("id", listItems.get(position).getId());
                 startActivity(toDetallesChofer);
                 break;
             case 2:
                 Intent toDetallesCamion = new Intent(this, DetallesCamion.class);
+                toDetallesCamion.putExtra("id", listItems.get(position).getId());
                 startActivity(toDetallesCamion);
                 break;
             case 3:
                 Intent toDetallesContenedor = new Intent(this, DetallesContenedor.class);
+                toDetallesContenedor.putExtra("id", listItems.get(position).getId());
                 startActivity(toDetallesContenedor);
                 break;
         }

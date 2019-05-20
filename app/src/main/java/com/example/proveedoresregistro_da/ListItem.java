@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ListItem {
 
     private ArrayList<String> datos;
+    private int id;
 
     public ListItem(ArrayList<String> datos)
     {
@@ -18,5 +19,13 @@ public class ListItem {
 
     public ArrayList<String> getDatos(){
         return datos;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }
