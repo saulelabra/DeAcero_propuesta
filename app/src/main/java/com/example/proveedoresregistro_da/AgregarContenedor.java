@@ -69,7 +69,6 @@ public class AgregarContenedor extends AppCompatActivity {
                 placas_str = placas.getText().toString();
                 transportista = spinner.getSelectedItem().toString();
                 transportista = trans_id.get(arr_trans_string.indexOf(transportista));
-                Toast.makeText(AgregarContenedor.this, "hola: "+transportista, Toast.LENGTH_LONG).show();
                 guardarDatos();
             }
         });
@@ -148,8 +147,6 @@ public class AgregarContenedor extends AppCompatActivity {
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
 
-        /*url_add_camion = url_add_camion + "marca=" + marca_str + "&modelo=" + modelo_str + "&placas=" + placas_str + "&transportista=" + transportista +
-                "&rfid="+ rfid_str + "&tipo=" + tipo_str;*/
         url_add_contenedor = url_add_contenedor +
                 "placas=" + placas_str + "&transportista=" + transportista + "&rfid=" +rfid_str + "&tipo=" + tipo_str;
 
