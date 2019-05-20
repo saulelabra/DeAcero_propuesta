@@ -57,6 +57,13 @@
             android:text="INE/IFE"
             style="@style/field_description"/>
 
+        <TextView
+            android:id="@+id/ine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/subtitle"
+            android:layout_marginBottom="15dp"/>
+
     </LinearLayout>
 
 </RelativeLayout>

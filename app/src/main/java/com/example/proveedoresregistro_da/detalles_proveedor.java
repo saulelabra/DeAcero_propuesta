@@ -30,9 +30,9 @@ public class detalles_proveedor extends AppCompatActivity {
 
         userData = recuperarDatosUsuario();
 
-        String textoRFC = "RFC: " + userData.get("rfc");
-        String textoCuenta = "Cuenta de deposito: " + userData.get("cuenta_a_depositar");
-        String textoDireccion = "Dirección: " + userData.get("direccion");
+        String textoRFC = userData.get("rfc");
+        String textoCuenta = userData.get("cuenta_a_depositar");
+        String textoDireccion = userData.get("direccion");
 
         nombreProveedor.setText(userData.get("nombreProveedor"));
         rfc.setText(textoRFC);
