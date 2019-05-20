@@ -15,19 +15,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".DetallesContenedor"
-            android:label="Detalles del Contenedor" />
+            android:label="Detalles del Contenedor"
+            android:parentActivityName=".ElementosRegistrados"/>
         <activity
             android:name=".DetallesCamion"
-            android:label="Detalles del Camión" />
+            android:label="Detalles del Camión"
+            android:parentActivityName=".ElementosRegistrados"/>
         <activity
             android:name=".DetallesChofer"
-            android:label="Detalles del Chofer" />
+            android:label="Detalles del Chofer"
+            android:parentActivityName=".ElementosRegistrados"/>
         <activity
             android:name=".DetallesTransportista"
-            android:label="Detalles del Transportista" />
+            android:label="Detalles del Transportista"
+            android:parentActivityName=".ElementosRegistrados"/>
         <activity
             android:name=".ElementosRegistrados"
             android:label="Elementos Registrados"
+            android:launchMode="singleTop"
             android:parentActivityName=".Menu" />
         <activity
             android:name=".detalles_proveedor"

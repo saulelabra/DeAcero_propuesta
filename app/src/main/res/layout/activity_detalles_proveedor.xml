@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:text="nombre"
             style="@style/title"
+            android:layout_marginLeft="20dp"
             />
 
         <Space
@@ -45,28 +46,60 @@
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-        <TextView
-            android:id="@+id/rfc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="rfc"
-            style="@style/subtitle"
-            />
 
-        <TextView
-            android:id="@+id/num_cuenta"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="numero de cuenta"
-            style="@style/subtitle"
-            />
-        <TextView
-            android:id="@+id/direccion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="direccion"
-            style="@style/subtitle"
-            />
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RFC"/>
+
+            <TextView
+                android:id="@+id/rfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="rfc"
+                style="@style/subtitle"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuenta a depositar"/>
+
+            <TextView
+                android:id="@+id/num_cuenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="numero de cuenta"
+                style="@style/subtitle"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dirección"/>
+
+            <TextView
+                android:id="@+id/direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="direccion"
+                style="@style/subtitle" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
