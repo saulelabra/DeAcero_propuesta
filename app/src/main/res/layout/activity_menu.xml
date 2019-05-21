@@ -228,7 +228,7 @@
 
                     <Button
                         android:id="@+id/reg_transportista"
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        style="@style/Widget.AppCompat.Button"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -293,7 +293,7 @@
 
                     <Button
                         android:id="@+id/reg_chofer"
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        style="@style/Widget.AppCompat.Button"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -358,7 +358,7 @@
 
                     <Button
                         android:id="@+id/reg_camion"
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        style="@style/Widget.AppCompat.Button"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -423,7 +423,7 @@
 
                     <Button
                         android:id="@+id/reg_contenedor"
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        style="@style/Widget.AppCompat.Button"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

@@ -63,7 +63,7 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     ArrayList<ListItem> arr_trans;
     ArrayList<String> arr_trans_string;
     ArrayList<String> arr_chof_nom;
-    ArrayList<String> trans_apellido;
+    ArrayList<String> chofer_apellido;
     ArrayList<String> arr_camion;
     ArrayList<String> arr_cont;
     ArrayList<String> arr_patio;
@@ -103,7 +103,7 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
 
         arr_trans = new ArrayList<>();
         arr_trans_string = new ArrayList<>();
-        trans_apellido = new ArrayList<>();
+        chofer_apellido = new ArrayList<>();
         arr_chof_nom = new ArrayList<>();
         arr_camion = new ArrayList<>();
         arr_cont = new ArrayList<>();
@@ -331,14 +331,17 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
             public void onResponse(JSONObject response) {
                 barraDeProgreso.hide();
                 try {
-                    JSONArray json_arr_trans = new JSONArray();
+                    JSONArray json_arr_choferes = new JSONArray();
 
-                    json_arr_trans = response.getJSONArray("Choferes_registrados");
+                    json_arr_choferes = response.getJSONArray("Choferes_registrados");
 
-                    for(int i=0; i<json_arr_trans.length(); i++)
+                    for(int i=0; i<json_arr_choferes.length(); i++)
                     {
-                        JSONObject json_obj = json_arr_trans.getJSONObject(i);
-                        arr_chof_nom.add(json_obj.getString("nombre"));
+                        JSONObject json_obj = json_arr_choferes.getJSONObject(i);
+
+                        String nombreyapellido = json_obj.getString("nombre") + " " + json_obj.getString("apellido");
+
+                        arr_chof_nom.add(nombreyapellido);
                         arr_chof_id.add(json_obj.getString("id"));
                     }
 
@@ -392,7 +395,10 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
                     for(int i=0; i<json_arr_trans.length(); i++)
                     {
                         JSONObject json_obj = json_arr_trans.getJSONObject(i);
-                        arr_camion.add(json_obj.getString("placas"));
+
+                        String camionyplacas = json_obj.getString("marca") + " " + json_obj.getString("modelo") + " " + json_obj.getString("placas");
+
+                        arr_camion.add(camionyplacas);
                         arr_camion_id.add(json_obj.getString("id"));
                     }
 
