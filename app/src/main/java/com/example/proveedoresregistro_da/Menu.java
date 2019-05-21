@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import java.util.Map;
 
 public class Menu extends AppCompatActivity {
 
-    LinearLayout envios, transportistas, choferes, camiones, contenedores;
+    Button consultar_envios, consultar_transportistas, consultar_choferes, consultar_camiones, consultar_contenedores;
     Map<String, String> userData = new HashMap<String, String>();
 
     TextView proveedor_TextView, direccion_TextView, num_envios_tv, num_transportistas_tv, num_choferes_tv, num_camiones_tv, num_contenedores_tv;
@@ -88,11 +89,11 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        envios = findViewById(R.id.envios);
-        transportistas = findViewById(R.id.transportistas);
-        choferes = findViewById(R.id.choferes);
-        camiones = findViewById(R.id.camiones);
-        contenedores = findViewById(R.id.contenedores);
+        consultar_envios = findViewById(R.id.consultar_envios);
+        consultar_transportistas = findViewById(R.id.consultar_transportistas);
+        consultar_choferes = findViewById(R.id.consultar_choferes);
+        consultar_camiones = findViewById(R.id.consultar_camiones);
+        consultar_contenedores = findViewById(R.id.consultar_contenedores);
 
         proveedor_TextView = findViewById(R.id.proveedor_tv);
         direccion_TextView = findViewById(R.id.direccion_tv);
@@ -104,7 +105,7 @@ public class Menu extends AppCompatActivity {
 
         barraDeProgreso = new ProgressDialog(Menu.this);
 
-        envios.setOnClickListener(new View.OnClickListener() {
+        consultar_envios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toEnvios = new Intent(Menu.this, EnviosProgramados.class);
@@ -112,7 +113,7 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        transportistas.setOnClickListener(new View.OnClickListener() {
+        consultar_transportistas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
@@ -121,7 +122,7 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        choferes.setOnClickListener(new View.OnClickListener() {
+        consultar_choferes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
@@ -130,7 +131,7 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        camiones.setOnClickListener(new View.OnClickListener() {
+        consultar_camiones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);
@@ -139,7 +140,7 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        contenedores.setOnClickListener(new View.OnClickListener() {
+        consultar_contenedores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toElementosReg = new Intent(Menu.this, ElementosRegistrados.class);

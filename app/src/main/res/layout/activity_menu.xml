@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -47,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="0dp"
-            app:srcCompat="@drawable/ic_baseline_account_box_24px" />
+            app:srcCompat="@drawable/ic_baseline_account_box_24px"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,18 +60,20 @@
             <TextView
                 android:id="@+id/proveedor_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:text="proveedorA"
                 android:textSize="25sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:gravity="left"/>
+                android:gravity="left"
+                app:autoSizeTextType="uniform"/>
 
             <TextView
                 android:id="@+id/direccion_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="Av. Construcción #23 Col. Irrigación 01500"
-                android:gravity="left" />
+                android:gravity="left"
+                app:autoSizeTextType="uniform"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -82,8 +85,9 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:text="Datos Registrados"
+        app:autoSizeTextType="uniform"
         style="@style/subtitle"/>
 
     <Space
@@ -99,171 +103,337 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/envios"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/envios_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:clickable="true"
+                android:layout_height="45dp"
                 android:background="@color/thumbColor"
+                android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
+                <android.support.constraint.Guideline
+                    android:id="@+id/startButtons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
                 <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="180dp"
+                    android:id="@+id/envios_label"
+                    style="@style/field_description"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="Envíos"
-                    style="@style/field_description"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/cantidad_envios"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/envios_label"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="regEnvio"
-                    android:text="+"
-                    style="@style/Widget.AppCompat.Button.Colored"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/envios_row"
+                    app:layout_constraintLeft_toRightOf="@id/startButtons"
+                    app:layout_constraintRight_toRightOf="@id/envios_row"
+                    app:layout_constraintTop_toTopOf="@id/envios_row">
 
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/consultar_envios"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="ver" />
+
+                    <Button
+                        android:id="@+id/button"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:onClick="regEnvio"
+                        android:text="nuevo" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_weight="1" />
+                 />
 
-            <LinearLayout
-                android:id="@+id/transportistas"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/transportista_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    style="@style/field_description"
-                    android:layout_width="180dp"
+                <android.support.constraint.Guideline
+                    android:id="@+id/startButtons2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Transportista" />
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
+                <TextView
+                    android:id="@+id/transportista_label"
+                    style="@style/field_description"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Transportistas"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/cantidad_transportistas"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/transportista_label"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/button1"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="regTransportista"
-                    android:text="+"
-                    style="@style/Base.Widget.AppCompat.Button"/>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/transportista_row"
+                    app:layout_constraintLeft_toRightOf="@id/startButtons2"
+                    app:layout_constraintRight_toRightOf="@id/transportista_row"
+                    app:layout_constraintTop_toTopOf="@id/transportista_row">
 
-            <LinearLayout
-                android:id="@+id/choferes"
+                    <Button
+                        android:id="@+id/consultar_transportistas"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="ver" />
+
+                    <Button
+                        android:id="@+id/reg_transportista"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:onClick="regTransportista"
+                        android:text="nuevo" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/chofer_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
+                <android.support.constraint.Guideline
+                    android:id="@+id/startButtons3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
                 <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="180dp"
+                    android:id="@+id/chofer_label"
+                    style="@style/field_description"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="Choferes"
-                    style="@style/field_description"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/cantidad_choferes"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/chofer_label"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="regChofer"
-                    android:text="+"
-                    style="@style/Base.Widget.AppCompat.Button"/>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/chofer_row"
+                    app:layout_constraintLeft_toRightOf="@id/startButtons3"
+                    app:layout_constraintRight_toRightOf="@id/chofer_row"
+                    app:layout_constraintTop_toTopOf="@id/chofer_row">
 
-            <LinearLayout
-                android:id="@+id/camiones"
+                    <Button
+                        android:id="@+id/consultar_choferes"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="ver" />
+
+                    <Button
+                        android:id="@+id/reg_chofer"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:onClick="regChofer"
+                        android:text="nuevo" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/camion_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
+                <android.support.constraint.Guideline
+                    android:id="@+id/startButtons4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
                 <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="180dp"
+                    android:id="@+id/camion_label"
+                    style="@style/field_description"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="Camiones"
-                    style="@style/field_description"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/cantidad_camiones"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/camion_label"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="regCamion"
-                    android:text="+"
-                    style="@style/Base.Widget.AppCompat.Button"/>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/camion_row"
+                    app:layout_constraintLeft_toRightOf="@id/startButtons4"
+                    app:layout_constraintRight_toRightOf="@id/camion_row"
+                    app:layout_constraintTop_toTopOf="@id/camion_row">
 
-            <LinearLayout
-                android:id="@+id/contenedores"
+                    <Button
+                        android:id="@+id/consultar_camiones"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="ver" />
+
+                    <Button
+                        android:id="@+id/reg_camion"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:onClick="regCamion"
+                        android:text="nuevo" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/contenedor_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
+                <android.support.constraint.Guideline
+                    android:id="@+id/startButtons5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
                 <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="180dp"
+                    android:id="@+id/contenedor_label"
+                    style="@style/field_description"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="Contenedores"
-                    style="@style/field_description"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/cantidad_contenedores"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0" />
+                    android:text="0"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/contenedor_label"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="regContenedor"
-                    android:text="+"
-                    style="@style/Base.Widget.AppCompat.Button"/>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/contenedor_row"
+                    app:layout_constraintLeft_toRightOf="@id/startButtons5"
+                    app:layout_constraintRight_toRightOf="@id/contenedor_row"
+                    app:layout_constraintTop_toTopOf="@id/contenedor_row">
+
+                    <Button
+                        android:id="@+id/consultar_contenedores"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="ver" />
+
+                    <Button
+                        android:id="@+id/reg_contenedor"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:onClick="regContenedor"
+                        android:text="nuevo" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
