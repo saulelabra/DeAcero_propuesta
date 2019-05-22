@@ -60,7 +60,6 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     String url_get_contenedor = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/contenedores.registrados.php?";
     String url_get_patio = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/patios.lista.php?";
     String url_add_envio = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.envio.php?";
-    ArrayList<ListItem> arr_trans;
     ArrayList<String> arr_trans_string;
     ArrayList<String> arr_chof_nom;
     ArrayList<String> chofer_apellido;
@@ -89,6 +88,7 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     EditText edit_com, edit_or;
     Button guardar;
     final int CODE_GALLERY_REQUEST = 999;
+    String camion_str, chofer_str, transportista_str, contenedor_str, fecha_envio_str, dir_origen_str, comentario_str;
 
 
     public void guardarEnvioYReg(View view) {
@@ -101,7 +101,6 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_envio);
 
-        arr_trans = new ArrayList<>();
         arr_trans_string = new ArrayList<>();
         chofer_apellido = new ArrayList<>();
         arr_chof_nom = new ArrayList<>();
@@ -145,8 +144,14 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                camion_str = arr_camion_id.get(arr_camion.indexOf(spinner_cam.getSelectedItem().toString()));
+                chofer_str = arr_chof_id.get(arr_chof_nom.indexOf(spinner_c.getSelectedItem().toString()));
+                transportista_str = arr_trans_id.get(arr_trans_string.indexOf(spinner_t.getSelectedItem().toString()));
+                contenedor_str = arr_cont_id.get(arr_cont.indexOf(spinner_cont.getSelectedItem().toString()));
+                dir_origen_str = edit_or.getText().toString();
+                comentario_str = edit_com.getText().toString();
+                //Toast.makeText(AgregarEnvio.this, "hola: "+contenedor_str, Toast.LENGTH_LONG).show();
                 guardarEnvio();
-                //Toast.makeText(AgregarEnvio.this, "hola", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -188,10 +193,12 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         seleccionar_fecha.setText(year+"/"+mes+"/"+dia+" - "+hourOfDay+":"+minute);
+        fecha_envio_str = year+"-"+mes+"-"+dia+" "+hourOfDay+":"+minute+":00";
     }
 
     public void btn_add_material (View v)
     {
+        //Toast.makeText(AgregarEnvio.this, "Material añadido", Toast.LENGTH_SHORT).show();
         String mats = "";
         String cants = "";
         mats_cant.add(new Pair<String, String>(lista_mats.getSelectedItem().toString(), cantidad.getText().toString()));
@@ -207,17 +214,18 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
 
     public void btn_del_material(View v)
     {
+        //Toast.makeText(AgregarEnvio.this, "Material eliminado", Toast.LENGTH_SHORT).show();
         String mats = "";
         String cants = "";
+
+        if( mats_cant.size() > 0 )
+            mats_cant.remove( mats_cant.size() - 1 );
 
         for (int i=0;i<mats_cant.size();i++)
         {
             mats += mats_cant.get(i).first + "\n";
             cants += mats_cant.get(i).second + "\n";
         }
-
-        if( mats_cant.size() > 0 )
-            mats_cant.remove( mats_cant.size() - 1 );
 
         materiales.setText("Materiales:\n"+mats);
         cantidades.setText("Cantidad:\n"+cants);
@@ -594,10 +602,23 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg";
 
         url_add_envio = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.envio.php?" +
-                "id_camion=101&id_chofer=101&fecha_reg=2019-05-21&id_patio_dest=101&dir_origen=Av.delosPoetas&" +
-                "url_boleta=http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg&" +
-                "fecha_llegada=2019-05-21&estado=-1&id_policia=0&comentario=comentario&id_usuario=1&comentarios_check=-1&" +
-                "id_transportista=101&id_contenedor=101&cantidad=10&id_material=6&id_envio=101";
+                "id_camion="+ camion_str +
+                "&id_chofer=" + chofer_str +
+                "&fecha_reg=2019-05-21" +
+                "&id_patio_dest=" + spinner_patio.getSelectedItem().toString() +
+                "&dir_origen="+ dir_origen_str +
+                "&url_boleta=http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg" +
+                "&fecha_llegada="+fecha_envio_str +
+                "&estado=-1" +
+                "&id_policia=0" +
+                "&comentario=" + comentario_str +
+                "&id_usuario="+ id +
+                "&comentarios_check=-1" +
+                "&id_transportista="+ transportista_str +
+                "&id_contenedor="+ contenedor_str +
+                "&cantidad=10" +
+                "&id_material=6" +
+                "&id_envio=1";
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_envio, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
