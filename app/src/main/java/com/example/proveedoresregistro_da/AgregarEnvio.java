@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -88,7 +89,7 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     EditText edit_com, edit_or;
     Button guardar;
     final int CODE_GALLERY_REQUEST = 999;
-    String camion_str, chofer_str, transportista_str, contenedor_str, fecha_envio_str, dir_origen_str, comentario_str;
+    String camion_str, chofer_str, transportista_str, contenedor_str, fecha_envio_str, dir_origen_str, comentario_str, patio_dest;
 
 
     public void guardarEnvioYReg(View view) {
@@ -148,9 +149,19 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
                 chofer_str = arr_chof_id.get(arr_chof_nom.indexOf(spinner_c.getSelectedItem().toString()));
                 transportista_str = arr_trans_id.get(arr_trans_string.indexOf(spinner_t.getSelectedItem().toString()));
                 contenedor_str = arr_cont_id.get(arr_cont.indexOf(spinner_cont.getSelectedItem().toString()));
+                patio_dest = spinner_patio.getSelectedItem().toString();
                 dir_origen_str = edit_or.getText().toString();
                 comentario_str = edit_com.getText().toString();
-                //Toast.makeText(AgregarEnvio.this, "hola: "+contenedor_str, Toast.LENGTH_LONG).show();
+                //Toast.makeText(AgregarEnvio.this, "hola: "+id, Toast.LENGTH_LONG).show();
+                Log.d("Values", "Camion: "+camion_str+
+                                "\nChofer: "+chofer_str+
+                                "\npatio_dest: "+patio_dest+
+                                "\nDir_origen: "+dir_origen_str+
+                                "\ntransportista: "+transportista_str+
+                                "\nComentarios: "+comentario_str+
+                                "\nContenedor: "+contenedor_str+
+                                "\nFecha: "+fecha_envio_str
+                        );
                 guardarEnvio();
             }
         });
@@ -600,14 +611,14 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
         String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg";
-
-        url_add_envio = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.envio.php?" +
+        //http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg
+        url_add_envio = url_add_envio +
                 "id_camion="+ camion_str +
                 "&id_chofer=" + chofer_str +
                 "&fecha_reg=2019-05-21" +
-                "&id_patio_dest=" + spinner_patio.getSelectedItem().toString() +
+                "&id_patio_dest=" + patio_dest +
                 "&dir_origen="+ dir_origen_str +
-                "&url_boleta=http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg" +
+                "&url_boleta=testvalue" +
                 "&fecha_llegada="+fecha_envio_str +
                 "&estado=-1" +
                 "&id_policia=0" +
