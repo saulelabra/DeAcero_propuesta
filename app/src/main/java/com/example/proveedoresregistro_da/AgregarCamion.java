@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,6 +85,9 @@ public class AgregarCamion extends AppCompatActivity {
                 transportista = spinner.getSelectedItem().toString();
                 transportista = trans_id.get(arr_trans_string.indexOf(transportista));
                 guardarDatos();
+
+                Intent toMenu = new Intent(AgregarCamion.this, Menu.class);
+                startActivity(toMenu);
             }
         });
     }
@@ -161,10 +165,17 @@ public class AgregarCamion extends AppCompatActivity {
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
 
-        url_add_camion = url_add_camion + "marca=" + marca_str + "&modelo=" + modelo_str + "&placas=" + placas_str + "&transportista=" + transportista +
-                "&rfid="+ rfid_str + "&tipo=" + tipo_str;
+        String encodedMarca = URLEncoder.encode(marca_str);
+        String encodedModelo = URLEncoder.encode(modelo_str);
+        String encodedPlacas = URLEncoder.encode(placas_str);
+        String encodedTransportista = URLEncoder.encode(transportista);
+        String encodedRFID = URLEncoder.encode(rfid_str);
+        String encodedTipo = URLEncoder.encode(tipo_str);
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_camion, null, new Response.Listener<JSONArray>() {
+        String urlWithParams = url_add_camion + "marca=" + encodedMarca + "&modelo=" + encodedModelo + "&placas=" + encodedPlacas + "&transportista=" + encodedTransportista +
+            "&rfid="+ encodedRFID + "&tipo=" + encodedTipo;
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 barraDeProgreso.hide();
                 Toast.makeText(AgregarCamion.this, "Datos ingresados", Toast.LENGTH_LONG).show();

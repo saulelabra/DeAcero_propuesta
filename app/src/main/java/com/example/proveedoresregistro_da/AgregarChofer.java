@@ -43,6 +43,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,6 +105,9 @@ public class AgregarChofer extends AppCompatActivity {
                 transportista = trans_id.get(arr_trans_string.indexOf(transportista));
                 //chooseImage();
                 guardarDatos();
+
+                Intent toMenu = new Intent(AgregarChofer.this, Menu.class);
+                startActivity(toMenu);
             }
         });
     }
@@ -282,10 +286,14 @@ public class AgregarChofer extends AppCompatActivity {
         barraDeProgreso.show();
         String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg";
 
-        url_add_chofer = url_add_chofer + "transportista="+
-                transportista+ "&nombre=" + nombre_str + "&apellido=" + apellido_str+"&ine=" + imageData;
+        String encodedNombre = URLEncoder.encode(nombre_str);
+        String encodedApellido = URLEncoder.encode(apellido_str);
+        String encodedImageData = URLEncoder.encode(imageData);
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_chofer, null, new Response.Listener<JSONArray>() {
+        String urlWithParams = url_add_chofer + "transportista="+
+                transportista+ "&nombre=" + encodedNombre + "&apellido=" + encodedApellido +"&ine=" + encodedImageData;
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 barraDeProgreso.hide();
                 Toast.makeText(AgregarChofer.this, "Datos ingresados", Toast.LENGTH_LONG).show();

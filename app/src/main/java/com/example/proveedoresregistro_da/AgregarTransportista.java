@@ -20,7 +20,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +32,7 @@ public class AgregarTransportista extends AppCompatActivity {
     EditText nom, tel, correo;
     String nom_str, tel_str, correo_str;
     String url_add_transportista = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.transportista.php?";
-    Button savebtn;
+    Button savebtn ;
 
     public void fillName(View view){
         nom.setText(recuperarNombreUsuario());
@@ -69,15 +72,36 @@ public class AgregarTransportista extends AppCompatActivity {
         final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarTransportista.this);
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
-        String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg";
 
-        url_add_transportista = url_add_transportista + "nombre="+
-                nom_str+ "&tel=" + tel_str + "&correo=" + correo_str;
+        String encoded_nombre = URLEncoder.encode(nom_str);
+        String encoded_tel = URLEncoder.encode(tel_str);
+        String encoded_correo = URLEncoder.encode(correo_str);
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_transportista, null, new Response.Listener<JSONArray>() {
+        String urlWithParams = url_add_transportista +"nombre=" + encoded_nombre + "&tel=" + encoded_tel + "&correo=" + encoded_correo;
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 barraDeProgreso.hide();
-                Toast.makeText(AgregarTransportista.this, "Datos ingresados", Toast.LENGTH_LONG).show();
+                try{
+                    JSONObject codeResponse = response.getJSONObject(0);
+
+                    String code = codeResponse.getString("Codigo");
+
+                    if(code.equals("0"))
+                    {
+                        Toast.makeText(AgregarTransportista.this, "Datos ingresados", Toast.LENGTH_LONG).show();
+                        Intent toMenu = new Intent (AgregarTransportista.this, Menu.class);
+                        startActivity(toMenu);
+                    }else{
+                        if(code.equals("06"))
+                        {
+                            Toast.makeText(AgregarTransportista.this, "Datos incompletos", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }catch(JSONException e) {
+                    Toast.makeText(AgregarTransportista.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override

@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -150,8 +151,13 @@ public class AgregarContenedor extends AppCompatActivity {
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
 
-        url_add_contenedor = url_add_contenedor +
-                "placas=" + placas_str + "&transportista=" + transportista + "&rfid=" +rfid_str + "&tipo=" + tipo_str;
+        String encodedPlacas = URLEncoder.encode(placas_str);
+        String encodedTransportista = URLEncoder.encode(transportista);
+        String encodedRfid = URLEncoder.encode(rfid_str);
+        String encodedTipo = URLEncoder.encode(tipo_str);
+
+        String urlWithParams = url_add_contenedor +
+                "placas=" + encodedPlacas + "&transportista=" + encodedTransportista + "&rfid=" + encodedRfid + "&tipo=" + encodedTipo;
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_contenedor, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
