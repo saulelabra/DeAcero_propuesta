@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +28,8 @@ import java.util.Map;
 
 public class DetallesDeEnvio extends AppCompatActivity {
 
-    TextView id_envio, fecha_registro, fecha_llegada, patio_destino, direccion_origen, transportista, nombre_chofer, apellido_chofer, ine_chofer, tipo_camion, marca_camion, modelo_camion, placas_camion, rfid_camion, placas_contenedor, tipo_contenedor, rfid_contenedor, material, comentarios, boleta_salida;
+    TextView id_envio, fecha_registro, fecha_llegada, patio_destino, direccion_origen, transportista, nombre_chofer, apellido_chofer, tipo_camion, marca_camion, modelo_camion, placas_camion, rfid_camion, placas_contenedor, tipo_contenedor, rfid_contenedor, material, comentarios;
+    ImageView image_ine, boleta_imagen;
     String SERVICIO_DETALLES_ENVIO = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/envio.detalles.php?";
     int idEnvio, idUsuario;
 
@@ -43,7 +46,6 @@ public class DetallesDeEnvio extends AppCompatActivity {
         transportista = findViewById(R.id.transportista);
         nombre_chofer = findViewById(R.id.nombre_chofer);
         apellido_chofer = findViewById(R.id.apellido_chofer);
-        ine_chofer = findViewById(R.id.ine_chofer);
         tipo_camion = findViewById(R.id.tipo_camion);
         marca_camion = findViewById(R.id.marca_camion);
         modelo_camion = findViewById(R.id.modelo_camion);
@@ -54,7 +56,9 @@ public class DetallesDeEnvio extends AppCompatActivity {
         rfid_contenedor = findViewById(R.id.rfid_contenedor);
         material = findViewById(R.id.material);
         comentarios = findViewById(R.id.comentarios);
-        boleta_salida = findViewById(R.id.boleta_salida);
+
+        image_ine = findViewById(R.id.ine_imagen);
+        boleta_imagen = findViewById(R.id.boleta_imagen);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -89,7 +93,6 @@ public class DetallesDeEnvio extends AppCompatActivity {
                     transportista.setText(object.getString("transportista"));
                     nombre_chofer.setText(object.getString("nombre_chofer"));
                     apellido_chofer.setText(object.getString("apellido_chofer"));
-                    ine_chofer.setText(object.getString("ine_chofer"));
                     tipo_camion.setText(object.getString("tipo_camion"));
                     marca_camion.setText(object.getString("marca_camion"));
                     modelo_camion.setText(object.getString("modelo_camion"));
@@ -99,11 +102,13 @@ public class DetallesDeEnvio extends AppCompatActivity {
                     tipo_contenedor.setText(object.getString("tipo_contenedor"));
                     rfid_contenedor.setText(object.getString("rfid_contenedor"));
 
+                    Picasso.get().load("http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg").into(image_ine);
+                    Picasso.get().load("http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg").into(boleta_imagen);
+
                     String material_y_cantidad = object.getString("material") + " " + object.getString("cantidad") + "t";
                     material.setText(material_y_cantidad);
 
                     comentarios.setText(object.getString("comentarios"));
-                    boleta_salida.setText(object.getString("boleta_salida"));
 
                 }catch (JSONException e) {
                     Toast.makeText(DetallesDeEnvio.this, "Problema en: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
