@@ -291,7 +291,7 @@ public class AgregarChofer extends AppCompatActivity {
         String encodedImageData = URLEncoder.encode(imageData);
 
         String urlWithParams = url_add_chofer + "transportista="+
-                transportista+ "&nombre=" + encodedNombre + "&apellido=" + encodedApellido +"&ine=" + encodedImageData;
+                transportista+ "&nombre=" + encodedNombre + "&apellido=" + encodedApellido +"&ine=" + encodedImageData + "&id=" + id;
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {

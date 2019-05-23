@@ -157,7 +157,7 @@ public class AgregarContenedor extends AppCompatActivity {
         String encodedTipo = URLEncoder.encode(tipo_str);
 
         String urlWithParams = url_add_contenedor +
-                "placas=" + encodedPlacas + "&transportista=" + encodedTransportista + "&rfid=" + encodedRfid + "&tipo=" + encodedTipo;
+                "placas=" + encodedPlacas + "&transportista=" + encodedTransportista + "&rfid=" + encodedRfid + "&tipo=" + encodedTipo + "&id=" + id;
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_contenedor, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {

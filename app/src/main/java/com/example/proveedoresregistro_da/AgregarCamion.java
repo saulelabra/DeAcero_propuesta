@@ -173,7 +173,7 @@ public class AgregarCamion extends AppCompatActivity {
         String encodedTipo = URLEncoder.encode(tipo_str);
 
         String urlWithParams = url_add_camion + "marca=" + encodedMarca + "&modelo=" + encodedModelo + "&placas=" + encodedPlacas + "&transportista=" + encodedTransportista +
-            "&rfid="+ encodedRFID + "&tipo=" + encodedTipo;
+            "&rfid="+ encodedRFID + "&tipo=" + encodedTipo + "&id=" + id;
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
