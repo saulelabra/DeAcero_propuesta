@@ -668,7 +668,7 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
 
     private void setSQLDate(int hourOfDay, int minute)
     {
-        String hora = null, minuto = null, mes = null, dia = null;
+        String hora = String.valueOf(hourOfDay), minuto = String.valueOf(minute), mes = String.valueOf(mes_f), dia = String.valueOf(dia_f);
         if (hourOfDay < 10)
             hora = "0"+hourOfDay;
         if (minute < 10)
