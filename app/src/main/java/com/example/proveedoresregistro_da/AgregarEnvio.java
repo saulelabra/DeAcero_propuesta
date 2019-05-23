@@ -77,7 +77,7 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
 
     private Spinner spinner_t, spinner_c, spinner_cam, spinner_cont, spinner_patio;
     TextView seleccionar_fecha;
-    int dia, mes, year, hora, minuto;
+    int dia_f, mes_f, year_f, hora_f, minuto_f;
     Button add_material;
     TextView materiales, cantidades;
     Spinner lista_mats;
@@ -181,30 +181,34 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
     public void btn_ingresar_fecha (View view)
     {
         Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        mes = c.get(Calendar.MONTH);
-        dia = c.get(Calendar.DAY_OF_MONTH);
+        year_f = c.get(Calendar.YEAR);
+        mes_f = c.get(Calendar.MONTH);
+        dia_f = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(AgregarEnvio.this, AgregarEnvio.this, year, mes, dia);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AgregarEnvio.this, AgregarEnvio.this, year_f, mes_f, dia_f);
         datePickerDialog.show();
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
-        hora = c.get(Calendar.HOUR_OF_DAY);
-        minuto = c.get(Calendar.MINUTE);
+        hora_f = c.get(Calendar.HOUR_OF_DAY);
+        minuto_f = c.get(Calendar.MINUTE);
+
+        year_f = year;
+        mes_f = month;
+        dia_f = dayOfMonth;
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(AgregarEnvio.this, AgregarEnvio.this,
-                hora, minuto, DateFormat.is24HourFormat(this));
+                hora_f, minuto_f, DateFormat.is24HourFormat(this));
         timePickerDialog.show();
 
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        seleccionar_fecha.setText(year+"/"+mes+"/"+dia+" - "+hourOfDay+":"+minute);
-        fecha_envio_str = year+"-"+mes+"-"+dia+" "+hourOfDay+":"+minute+":00";
+        setSQLDate(hourOfDay, minute);
+
     }
 
     public void btn_add_material (View v)
@@ -610,15 +614,15 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         final ProgressDialog barraDeProgreso = new ProgressDialog(AgregarEnvio.this);
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
-        String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg";
+        String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg";
         //http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg
         url_add_envio = url_add_envio +
                 "id_camion="+ camion_str +
                 "&id_chofer=" + chofer_str +
                 "&fecha_reg=2019-05-21" +
-                "&id_patio_dest=" + patio_dest +
+                "&patio_dest=" + patio_dest +
                 "&dir_origen="+ dir_origen_str +
-                "&url_boleta=testvalue" +
+                "&url_boleta="+ imageData +
                 "&fecha_llegada="+fecha_envio_str +
                 "&estado=-1" +
                 "&id_policia=0" +
@@ -629,12 +633,14 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
                 "&id_contenedor="+ contenedor_str +
                 "&cantidad=10" +
                 "&id_material=6" +
-                "&id_envio=1";
+                "&id_envio=101";
+
+        Log.d("Envio", url_add_envio);
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_envio, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 barraDeProgreso.hide();
-                Toast.makeText(AgregarEnvio.this, "Datos ingresados", Toast.LENGTH_LONG).show();
+                Toast.makeText(AgregarEnvio.this, "Datos ingresados ", Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -658,5 +664,20 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    private void setSQLDate(int hourOfDay, int minute)
+    {
+        String hora = null, minuto = null, mes = null, dia = null;
+        if (hourOfDay < 10)
+            hora = "0"+hourOfDay;
+        if (minute < 10)
+            minuto = "0"+minute;
+        if (mes_f < 10)
+            mes = "0"+mes_f;
+        if (dia_f < 10)
+            dia = "0"+dia_f;
+        seleccionar_fecha.setText(year_f+"/"+mes+"/"+dia+" - "+hora+":"+minuto);
+        fecha_envio_str = year_f+"-"+mes+"-"+dia+" "+hora+":"+minuto+":00";
     }
 }
