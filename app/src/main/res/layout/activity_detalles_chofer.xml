@@ -9,58 +9,58 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
+            style="@style/field_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre"
-            style="@style/field_description"/>
+            android:text="Nombre" />
 
         <TextView
             android:id="@+id/nombre"
+            style="@style/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            style="@style/subtitle"/>
+            android:layout_marginBottom="15dp" />
 
         <TextView
+            style="@style/field_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Apellido"
-            style="@style/field_description"/>
+            android:text="Apellido" />
 
         <TextView
             android:id="@+id/apellido"
+            style="@style/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            style="@style/subtitle"/>
+            android:layout_marginBottom="15dp" />
 
         <TextView
+            style="@style/field_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Transportista"
-            style="@style/field_description"/>
+            android:text="Transportista" />
 
         <TextView
             android:id="@+id/transportista"
+            style="@style/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/subtitle"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp" />
 
         <TextView
+            style="@style/field_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="INE/IFE"
-            style="@style/field_description"/>
+            android:text="INE/IFE" />
 
         <ImageView
             android:id="@+id/ine_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="254dp"
             app:srcCompat="@drawable/background_transparent" />
 
     </LinearLayout>

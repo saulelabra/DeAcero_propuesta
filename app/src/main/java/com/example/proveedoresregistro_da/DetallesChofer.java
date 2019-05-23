@@ -71,7 +71,7 @@ public class DetallesChofer extends AppCompatActivity {
                     ine_url_tmp = object.getString("ine");
 
                     String substring = "/home/pddm-1024595/html_container";
-                    String newString = "http://ubiquitous.csf.itesm.mx/~pddm-1024595";
+                    String newString = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/credencial-actual.jpg";
 
                     int position_of_coincidence = ine_url_tmp.indexOf(substring);
 
