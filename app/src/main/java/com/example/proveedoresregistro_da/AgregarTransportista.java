@@ -33,6 +33,7 @@ public class AgregarTransportista extends AppCompatActivity {
     String nom_str, tel_str, correo_str;
     String url_add_transportista = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/insert.transportista.php?";
     Button savebtn ;
+    int id;
 
     public void fillName(View view){
         nom.setText(recuperarNombreUsuario());
@@ -73,11 +74,12 @@ public class AgregarTransportista extends AppCompatActivity {
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
 
+
         String encoded_nombre = URLEncoder.encode(nom_str);
         String encoded_tel = URLEncoder.encode(tel_str);
         String encoded_correo = URLEncoder.encode(correo_str);
-
-        String urlWithParams = url_add_transportista +"nombre=" + encoded_nombre + "&tel=" + encoded_tel + "&correo=" + encoded_correo;
+        getId();
+        String urlWithParams = url_add_transportista +"nombre=" + encoded_nombre + "&tel=" + encoded_tel + "&correo=" + encoded_correo + "&id="+id;
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
@@ -135,4 +137,10 @@ public class AgregarTransportista extends AppCompatActivity {
 
         return nombreProveedor;
     }
+
+    private void getId() {
+        SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        id = userData.getInt("id", 0);
+    }
+
 }

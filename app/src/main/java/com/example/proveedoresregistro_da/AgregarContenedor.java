@@ -159,7 +159,7 @@ public class AgregarContenedor extends AppCompatActivity {
         String urlWithParams = url_add_contenedor +
                 "placas=" + encodedPlacas + "&transportista=" + encodedTransportista + "&rfid=" + encodedRfid + "&tipo=" + encodedTipo + "&id=" + id;
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_contenedor, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 barraDeProgreso.hide();
                 Toast.makeText(AgregarContenedor.this, "Datos ingresados", Toast.LENGTH_LONG).show();
