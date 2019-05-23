@@ -103,9 +103,12 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
 
-        SERVICIO_FECHAS = SERVICIO_FECHAS + "id=" + id;
+        Log.d("debug", "userId: " + id);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, SERVICIO_FECHAS, null, new Response.Listener<JSONObject>() {
+        String urlWithParams = SERVICIO_FECHAS + "id=" + id;
+        Log.d("debug", "servicio_fechas: " + urlWithParams);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONObject>() {
             public void onResponse(JSONObject response) {
                 barraDeProgreso.hide();
                 try {
@@ -159,9 +162,9 @@ public class EnviosProgramados extends AppCompatActivity implements RecyclerView
 
         Log.d(TAG,SERVICIO_ENVIOS.toString());
 
-        SERVICIO_ENVIOS = SERVICIO_ENVIOS + "id=" + id + "&" + "fecha='" + selected_date + "'";
+        String urlWithParams = SERVICIO_ENVIOS + "id=" + id + "&" + "fecha='" + selected_date + "'";
 
-        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, SERVICIO_ENVIOS, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest peticion = new JsonObjectRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 barraDeProgreso.hide();

@@ -616,7 +616,8 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         barraDeProgreso.show();
         String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg";
         //http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg
-        url_add_envio = url_add_envio +
+
+        String urlWithParams = url_add_envio +
                 "id_camion="+ camion_str +
                 "&id_chofer=" + chofer_str +
                 "&fecha_reg=2019-05-21" +
@@ -632,12 +633,11 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
                 "&id_transportista="+ transportista_str +
                 "&id_contenedor="+ contenedor_str +
                 "&cantidad=10" +
-                "&id_material=6" +
-                "&id_envio=101";
+                "&id_material=6";
 
-        Log.d("Envio", url_add_envio);
+        Log.d("Envio", urlWithParams);
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url_add_envio, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlWithParams, null, new Response.Listener<JSONArray>() {
             public void onResponse(JSONArray response) {
                 barraDeProgreso.hide();
                 Toast.makeText(AgregarEnvio.this, "Datos ingresados ", Toast.LENGTH_LONG).show();
