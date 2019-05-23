@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ public class DetallesDeEnvio extends AppCompatActivity {
 
     TextView id_envio, fecha_registro, fecha_llegada, patio_destino, direccion_origen, transportista, nombre_chofer, apellido_chofer, ine_chofer, tipo_camion, marca_camion, modelo_camion, placas_camion, rfid_camion, placas_contenedor, tipo_contenedor, rfid_contenedor, material, comentarios, boleta_salida;
     String SERVICIO_DETALLES_ENVIO = "http://ubiquitous.csf.itesm.mx/~pddm-1020725/content/DeAcero_API/queries/envio.detalles.php?";
-    int id, idUsuario;
+    int idEnvio, idUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +66,10 @@ public class DetallesDeEnvio extends AppCompatActivity {
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
 
-        getId();
+        getIdEnvios();
         getIdUsuario();
 
-        SERVICIO_DETALLES_ENVIO = SERVICIO_DETALLES_ENVIO + "usuario=" + idUsuario + "&" + "envio_id=" + id;
+        SERVICIO_DETALLES_ENVIO = SERVICIO_DETALLES_ENVIO + "usuario=" + idUsuario + "&" + "envio_id=" + idEnvio;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, SERVICIO_DETALLES_ENVIO, null, new Response.Listener<JSONObject>() {
             @Override
@@ -134,15 +135,17 @@ public class DetallesDeEnvio extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void getId()
+    private void getIdEnvios()
     {
         Bundle extras = getIntent().getExtras();
-        id = extras.getInt("id");
+        idEnvio = extras.getInt("id");
+        Log.d("debug", "idEnvio: " + idEnvio);
     }
 
     private void getIdUsuario()
     {
         SharedPreferences userData = getSharedPreferences("userData", Context.MODE_PRIVATE);
         idUsuario = userData.getInt("id", 0);
+        Log.d("debug", "idUsuario: " + idUsuario);
     }
 }
