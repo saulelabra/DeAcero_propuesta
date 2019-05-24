@@ -47,6 +47,7 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -615,19 +616,22 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
         barraDeProgreso.setMessage("Cargando");
         barraDeProgreso.show();
         String imageData = "http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg";
-        //http://ubiquitous.csf.itesm.mx/~pddm-1024595/content/proyecto/prueba_img/boleta_salida.jpg
+
+        String encodedDirOrigen = URLEncoder.encode(dir_origen_str);
+        String encodedComentario = URLEncoder.encode(comentario_str);
+        String encodedFechaLlegada = URLEncoder.encode(fecha_envio_str);
 
         String urlWithParams = url_add_envio +
                 "id_camion="+ camion_str +
                 "&id_chofer=" + chofer_str +
                 "&fecha_reg=2019-05-21" +
                 "&patio_dest=" + patio_dest +
-                "&dir_origen="+ dir_origen_str +
+                "&dir_origen="+ encodedDirOrigen +
                 "&url_boleta="+ imageData +
-                "&fecha_llegada="+fecha_envio_str +
+                "&fecha_llegada="+encodedFechaLlegada +
                 "&estado=-1" +
                 "&id_policia=0" +
-                "&comentario=" + comentario_str +
+                "&comentario=" + encodedComentario +
                 "&id_usuario="+ id +
                 "&comentarios_check=-1" +
                 "&id_transportista="+ transportista_str +
@@ -641,6 +645,9 @@ public class AgregarEnvio extends AppCompatActivity implements DatePickerDialog.
             public void onResponse(JSONArray response) {
                 barraDeProgreso.hide();
                 Toast.makeText(AgregarEnvio.this, "Datos ingresados ", Toast.LENGTH_LONG).show();
+
+                Intent toMenu = new Intent(AgregarEnvio.this, Menu.class);
+                startActivity(toMenu);
             }
         }, new Response.ErrorListener() {
             @Override
